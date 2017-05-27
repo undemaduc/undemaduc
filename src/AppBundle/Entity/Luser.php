@@ -130,7 +130,7 @@ class Luser
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="match", mappedBy="luser")
+     * @ORM\OneToMany(targetEntity="Match", mappedBy="luser")
      */
     protected $matches;
 

@@ -4,12 +4,14 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+
 /**
  * Class Messages
  * @package AppBundle\Entity4
  *
  * @ORM\Entity(repositoryClass="AppBundle\Repository\MessagesRepository")
  * @ORM\Table("messages")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Messages
 {
@@ -30,6 +32,7 @@ class Messages
      * @var int
      * @ORM\ManyToOne(targetEntity="User", inversedBy="messagesTo")
      * @ORM\JoinColumn(name="to_user", referencedColumnName="id", nullable=true)
+     * @JMS\
      */
     protected $toUser;
 
@@ -53,6 +56,12 @@ class Messages
      * @ORM\JoinColumn(name="from_luser", referencedColumnName="id", nullable=true)
      */
     protected $fromLuser;
+
+    /**
+     * @var \DateTime
+     * @ORM\Column(name="created_at", type="datetime", nullable=true)
+     */
+    public $createdAt;
 
     /**
      * @param string $message
@@ -147,5 +156,25 @@ class Messages
     public function getFromLuser()
     {
         return $this->fromLuser;
+    }
+
+    /**
+     * @ORM\PreFlush()
+     *
+     * @return Messages
+     */
+    public function setCreatedAt()
+    {
+        $this->createdAt = new \DateTime('now');
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
     }
 }

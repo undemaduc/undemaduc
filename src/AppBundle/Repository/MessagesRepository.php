@@ -12,4 +12,29 @@ use Doctrine\ORM\EntityRepository;
  */
 class MessagesRepository extends EntityRepository
 {
+    public function findMessageViaUser(
+        $user_id,
+        $luser_id
+    )
+    {
+        return $this->createQueryBuilder('m')
+            ->where('m.fromUser = :user_id')
+            ->andWhere('m.toLuser = :luser_id')
+            ->setParameter(':user_id', $user_id)
+            ->setParameter('luser_id', $luser_id)
+            ->getQuery()->getResult();
+    }
+
+    public function findMessageViaLuser(
+        $user_id,
+        $luser_id
+    )
+    {
+        return $this->createQueryBuilder('m')
+                    ->where('m.fromLuser = :luser_id')
+                    ->andWhere('m.toUser = :user_id')
+                    ->setParameter(':user_id', $user_id)
+                    ->setParameter('luser_id', $luser_id)
+                    ->getQuery()->getResult();
+    }
 }
