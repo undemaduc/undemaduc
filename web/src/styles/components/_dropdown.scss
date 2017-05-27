@@ -1,0 +1,50 @@
+$shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.16), 0 2px 8px 0 rgba(0, 0, 0, 0.12);
+
+.umd-dropdown {
+
+  display: inline-block;
+
+  .dropdown-toggle {
+    font-size: 50px;
+    color: white;
+    padding: 0;
+    background: transparent;
+    border: 0;
+
+    &:after {
+      color: $primary;
+      margin-left: 25px;
+      font-size: 35px;
+    }
+  }
+
+  &.show {
+
+    .dropdown-menu {
+      background: $background;
+      @include border-radius(0);
+    }
+
+    .dropdown-toggle,
+    .dropdown-item {
+      font-size: 50px;
+      color: white;
+      padding: 0;
+      background: transparent;
+      border: 0;
+      @include box-shadow(0);
+    }
+
+  }
+
+  &:after {
+    content: '';
+    width: 100%;
+    height: 2px;
+    background-color: $primary;
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+  }
+
+}
