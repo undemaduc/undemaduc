@@ -22,7 +22,7 @@
 .umd-content-container {
   position: relative;
   @include flex(1); // make it take up container height
- 
+
   .content-action__button--force-bottom {
     position: absolute;
     bottom: 30px;
