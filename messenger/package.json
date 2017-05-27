@@ -1,0 +1,17 @@
+{
+  "name": "messenger",
+  "version": "1.0.0",
+  "description": "Find me, like me",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Dan Vidican",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.15.3",
+    "jade": "^1.11.0",
+    "nodemon": "^1.11.0",
+    "socket.io": "^2.0.1"
+  }
+}
