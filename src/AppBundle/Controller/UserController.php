@@ -2,10 +2,10 @@
 
 namespace AppBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use AppBundle\Form\UserType;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use FOS\RestBundle\View\View;
@@ -49,21 +49,73 @@ class UserController extends FOSRestController
 
     /**
      * @Rest\Post("/user")
+     * @param Request $request
+     *
+     * @return View
      */
-    public function postAction(Request $request)
+    public function newAction(Request $request)
     {
-        $data = new User;
-        $name = $request->get('name');
-        if (empty($name)) {
-            return new View("NULL VALUES ARE NOT ALLOWED", Response::HTTP_NOT_ACCEPTABLE);
-        }
-        $data->setName($name);
-        $em = $this->getDoctrine()
-                   ->getManager()
-        ;
-        $em->persist($data);
-        $em->flush();
+        return $this->processForm(new User(), $request);
+    }
 
-        return new View("User Added Successfully", Response::HTTP_OK);
+    /**
+     * @Rest\Post("/user/{id}")
+     *
+     * @param Request $request
+     * @param User $user
+     *
+     * @return View
+     */
+    public function editAction(Request $request, User $user)
+    {
+        return $this->processForm($user, $request);
+    }
+
+    private function processForm(User $user, $request)
+    {
+        // 200 for updated
+        $statusCode = $user->isNew() ? Response::HTTP_CREATED : Response::HTTP_OK;
+
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            if ($user->getPlainPassword()) {
+                $password = $this->get('security.password_encoder')->encodePassword(
+                    $user,
+                    $user->getPlainPassword()
+                );
+                $user->setPassword($password);
+            }
+
+            $em = $this->getDoctrine()
+                       ->getManager()
+            ;
+
+            $em->persist($user);
+            $em->flush();
+
+            return new View('User ok.', $statusCode);
+        }
+
+        $errors = [ 'errors' => $this->getErrorsFromForm($form) ];
+
+        return new View($errors, Response::HTTP_BAD_REQUEST);
+    }
+
+    private function getErrorsFromForm(FormInterface $form)
+    {
+        $errors = array();
+        foreach ($form->getErrors(false) as $error) {
+            $errors[] = $error->getMessage();
+        }
+        foreach ($form->all() as $childForm) {
+            if ($childForm instanceof FormInterface) {
+                if ($childErrors = $this->getErrorsFromForm($childForm)) {
+                    $errors[$childForm->getName()] = $childErrors;
+                }
+            }
+        }
+        return $errors;
     }
 }

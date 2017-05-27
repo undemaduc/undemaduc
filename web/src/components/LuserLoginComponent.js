@@ -12,8 +12,9 @@ class LuserLoginComponent extends Component {
         return (
             <div>
                 <LoginButtonComponent buttonLabel="Login" 
-                    className="btn btn-primary btn-lg btn-block umd-btn umd-btn--facebook mt-auto"
-                    onButtonClick={this.props.onLoginButtonClick}/>
+                    className="btn btn-primary btn-lg btn-block umd-btn content-action__button--force-bottom umd-btn--icon-right"
+                    onButtonClick={this.props.onLoginButtonClick}
+                    iconClassName="demo-icon icon-arrow-right icon" />
             </div>
         );
     }
