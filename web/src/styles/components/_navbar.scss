@@ -57,4 +57,16 @@
 
   }
 
+  &.umd-navbar--unlogged {
+
+    .navbar-brand {
+      color: $primary;
+    }
+
+    .navbar-nav {
+      display: none;
+    }
+
+  }
+
 }
