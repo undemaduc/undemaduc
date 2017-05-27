@@ -85,5 +85,43 @@ class Match
         return $this->l_to_u;
     }
 
+    /**
+     * @param int $user
+     * @return Match
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param int $luser
+     * @return Match
+     */
+    public function setLuser($luser)
+    {
+        $this->luser = $luser;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getLuser()
+    {
+        return $this->luser;
+    }
+
 
 }
