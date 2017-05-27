@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -78,6 +79,13 @@ class User implements AdvancedUserInterface, \Serializable
      * @ORM\Column(name="path", type="string", nullable=true)
      */
     protected $path;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Match", mappedBy="user")
+     */
+    protected $matches;
 
     /**
      * @ORM\Column(name="is_active", type="boolean")
