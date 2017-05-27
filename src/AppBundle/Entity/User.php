@@ -3,15 +3,13 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\Entity;
-use Doctrine\ORM\Mapping\Table;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 
 /**
- * @Entity
- * @Table(name="user")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
+ * @ORM\Table(name="user")
  */
 class User implements AdvancedUserInterface, \Serializable
 {
@@ -154,21 +152,11 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Returns the roles granted to the user.
      *
-     * <code>
-     * public function getRoles()
-     * {
-     *     return array('ROLE_USER');
-     * }
-     * </code>
-     *
-     * Alternatively, the roles might be stored on a ``roles`` property,
-     * and populated in any number of different ways when the user object
-     * is created.
      * @return array (Role|string)[] The user roles
      */
     public function getRoles()
     {
-        return array('ROLE_USER');
+        return [self::ROLE_DEFAULT];
     }
 
     /**
