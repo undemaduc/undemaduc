@@ -67,19 +67,21 @@ class User implements AdvancedUserInterface, \Serializable
 
     /**
      * @var string
+     *
      * @ORM\Column(name="gender", type="string")
      */
     protected $gender;
 
     /**
      * Image File
+     *
      * @var File|UploadedFile
-    |     */
+     */
     private $file;
 
     /**
      * @var string
-     * @ORM\Column(name="path", type="string")
+     * @ORM\Column(name="path", type="string", nullable=true)
      */
     protected $path;
 
@@ -271,24 +273,20 @@ class User implements AdvancedUserInterface, \Serializable
     /** @see \Serializable::serialize() */
     public function serialize()
     {
-        return serialize(array(
-            $this->id,
-            $this->username,
-            $this->password,
-            // see section on salt below
-            // $this->salt,
-        ));
+        return serialize(
+            array(
+                $this->id,
+                $this->username,
+                $this->password,
+            )
+        );
     }
 
     /** @see \Serializable::unserialize() */
     public function unserialize($serialized)
     {
         list (
-            $this->id,
-            $this->username,
-            $this->password,
-            // see section on salt below
-            // $this->salt
+            $this->id, $this->username, $this->password,
             ) = unserialize($serialized);
     }
 
