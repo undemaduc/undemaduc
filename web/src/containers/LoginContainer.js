@@ -42,7 +42,7 @@ class LoginContainer extends Component {
     browseToLoginType(loginType) {
         if (loginType && loginType !== this.state.loginType) {
             this.refs.dropdown.hide();
-            browserHistory.push(loginType);
+            browserHistory.replace(loginType);
         }
     }
 
