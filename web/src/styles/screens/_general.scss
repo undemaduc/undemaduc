@@ -1,5 +1,9 @@
 body {
   background: $background;
+
+  @media (min-width: $break-md) {
+    background: #232836;
+  }
 }
 
 #app {
