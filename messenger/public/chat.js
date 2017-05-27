@@ -1,4 +1,4 @@
-window.onload = function () {
+window.onload = function() {
 
     var messages = [];
     var socket = io.connect('http://localhost:3700');
@@ -25,6 +25,8 @@ window.onload = function () {
         if (name.value == "") {
             alert("Please type your name!");
         } else {
+            console.log("dan are");
+            // connectionsService.getUser();
             var text = field.value;
             socket.emit('send', { message: text, username: name.value });
         }
