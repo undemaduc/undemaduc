@@ -11,12 +11,14 @@ class UserLoginComponent extends Component {
     render() {
         return (
             <div>
-                <LoginButtonComponent buttonLabel="Login with Facebook" 
-                    className="btn btn-primary btn-lg btn-block umd-btn umd-btn--facebook mt-auto"
-                    onButtonClick={this.props.onFacebookButtonClick}/>
+                <LoginButtonComponent buttonLabel="Login with Facebook"
+                    className="btn btn-primary btn-lg btn-block umd-btn umd-btn--facebook content-action__button--force-bottom umd-btn--icon-right"
+                    onButtonClick={this.props.onFacebookButtonClick}
+                    iconClassName="demo-icon icon-arrow-right icon" />
             </div>
         );
     }
+
 }
 
 UserLoginComponent.propTypes = {

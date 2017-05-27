@@ -12,6 +12,7 @@ class LoginButtonComponent extends Component {
 				<button type="button"
 					className={this.props.className}
 					onClick={this.props.onButtonClick}> {this.props.buttonLabel}
+					{this.props.iconClassName ? <i className={this.props.iconClassName}></i> : null}
 				</button>
 			</div>
 		);
