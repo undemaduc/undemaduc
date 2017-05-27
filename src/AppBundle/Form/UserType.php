@@ -22,7 +22,6 @@ class UserType extends AbstractType
                 ->add('description')
                 ->add('age', NumberType::class)
                 ->add('gender')
-                ->add('path')
         ;
     }
 
@@ -34,7 +33,7 @@ class UserType extends AbstractType
         $resolver->setDefaults(
             array(
                 'data_class' => 'AppBundle\Entity\User',
-                'csrf_protection'   => false,
+                'csrf_protection' => false,
             )
         );
     }
@@ -44,7 +43,7 @@ class UserType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'appbundle_user';
+        return 'user';
     }
 
 
