@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMS;
 
 
 /**
@@ -32,14 +33,14 @@ class Messages
      * @var int
      * @ORM\ManyToOne(targetEntity="User", inversedBy="messagesTo")
      * @ORM\JoinColumn(name="to_user", referencedColumnName="id", nullable=true)
-     * @JMS\
      */
     protected $toUser;
 
     /**
-     * @var int
+     * @var User
      * @ORM\ManyToOne(targetEntity="User", inversedBy="messagesFrom")
      * @ORM\JoinColumn(name="from_user", referencedColumnName="id", nullable=true)
+     * @JMS\Accessor(getter="getFromUserId")
      */
     protected $fromUser;
 
@@ -47,6 +48,7 @@ class Messages
      * @var int
      * @ORM\ManyToOne(targetEntity="Luser", inversedBy="messagesTo")
      * @ORM\JoinColumn(name="to_luser", referencedColumnName="id", nullable=true)
+     *
      */
     protected $toLuser;
 
@@ -113,11 +115,16 @@ class Messages
     }
 
     /**
-     * @return int
+     * @return User
      */
     public function getFromUser()
     {
         return $this->fromUser;
+    }
+
+    public function getFromUserId()
+    {
+        return $this->fromUser->getId();
     }
 
     /**

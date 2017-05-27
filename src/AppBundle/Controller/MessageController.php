@@ -60,12 +60,7 @@ class MessageController extends Controller
             return $a->getCreatedAt() < $b->getCreatedAt() ? true : false;
         });
 
-        $encoders = array(new XmlEncoder(), new JsonEncoder());
-        $normalizers = array(new ObjectNormalizer());
-
-        $serializer = new Serializer($normalizers, $encoders);
-
-        return $serializer->serialize($combined,'json');
+        return new View($combined,Response::HTTP_ACCEPTED);
     }
 
 }
