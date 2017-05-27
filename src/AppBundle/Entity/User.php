@@ -32,12 +32,6 @@ class User implements AdvancedUserInterface, \Serializable
 
     /**
      * @var string
-     * @ORM\Column(name="name", type="string")
-     */
-    protected $name;
-
-    /**
-     * @var string
      * @ORM\Column(name="password", type="string", length=64)
      */
     protected $password;
@@ -52,6 +46,12 @@ class User implements AdvancedUserInterface, \Serializable
      * @ORM\Column(name="email", type="string", length=60, unique=true)
      */
     protected $email;
+
+    /**
+     * @var string
+     * @ORM\Column(name="name", type="string")
+     */
+    protected $name;
 
     /**
      * @var string
@@ -329,4 +329,64 @@ class User implements AdvancedUserInterface, \Serializable
     {
         return __DIR__.'/../../../../web/user/';
     }
+
+    /**
+     * @param string $description
+     *
+     * @return User
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+    /**
+     * @param int $age
+     *
+     * @return User
+     */
+    public function setAge($age)
+    {
+        $this->age = $age;
+
+        return $this;
+}
+
+    /**
+     * @return int
+     */
+    public function getAge()
+    {
+        return $this->age;
+    }
+
+    /**
+     * @param string $gender
+     *
+     * @return User
+     */
+    public function setGender($gender)
+    {
+        $this->gender = $gender;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGender()
+    {
+        return $this->gender;
+    }
+
 }
