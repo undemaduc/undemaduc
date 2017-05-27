@@ -2,20 +2,16 @@
 
 namespace AppBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\Entity;
-use Doctrine\ORM\Mapping\Table;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 
 /**
- * @Entity
- * @Table(name="user")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
+ * @ORM\Table(name="user")
  */
-class User implements  UserInterface
+class User implements AdvancedUserInterface, \Serializable
 {
     const ROLE_DEFAULT = 'ROLE_USER';
 
@@ -30,39 +26,32 @@ class User implements  UserInterface
 
     /**
      * @var string
-     * @ORM\Column(name="username", type="string")
+     * @ORM\Column(name="username", type="string", length=25, unique=true)
      */
     protected $username;
+
+    /**
+     * @var string
+     * @ORM\Column(name="password", type="string", length=64)
+     */
+    protected $password;
+
+    /**
+     * @var string
+     */
+    public $plainPassword;
+
+    /**
+     * @var string
+     * @ORM\Column(name="email", type="string", length=60, unique=true)
+     */
+    protected $email;
 
     /**
      * @var string
      * @ORM\Column(name="name", type="string")
      */
     protected $name;
-
-    /**
-     * @var string
-     * @ORM\Column(name="password", type="string")
-     */
-    protected $password;
-
-    /**
-     * @var string
-     * @ORM\Column(name="plain_password", type="string")
-     */
-    protected $plainPassword;
-
-    /**
-     * @var string
-     * @ORM\Column(name="email", type="string")
-     */
-    protected $email;
-
-    /**
-     * @var string
-     * @ORM\Column(name="salt", type="string")
-     */
-    protected $salt;
 
     /**
      * @var string
@@ -78,26 +67,32 @@ class User implements  UserInterface
 
     /**
      * @var string
+     *
      * @ORM\Column(name="gender", type="string")
      */
     protected $gender;
 
     /**
      * Image File
-     * @var File
-|     */
+     *
+     * @var File|UploadedFile
+     */
     private $file;
 
     /**
      * @var string
-     * @ORM\Column(name="path", type="string")
+     * @ORM\Column(name="path", type="string", nullable=true)
      */
     protected $path;
 
-    protected function getUploadRootDir()
+    /**
+     * @ORM\Column(name="is_active", type="boolean")
+     */
+    private $isActive;
+
+    public function __construct()
     {
-        dump(__DIR__.'/../../../../web/user/');die;
-        return __DIR__.'/../../../../web/user/';
+        $this->isActive = true;
     }
 
     /**
@@ -135,7 +130,8 @@ class User implements  UserInterface
     /**
      * Sets file.
      *
-     * @param UploadedFile $file
+     * @param File|UploadedFile $file
+     *
      * @return User
      */
     public function setFile(File $file = null)
@@ -154,55 +150,16 @@ class User implements  UserInterface
     {
         return $this->file;
     }
-    /**
-     * @var Collection
-     */
-    protected $groups;
-
-    /**
-     * @var array
-     */
-    protected $roles;
-
 
     /**
      * Returns the roles granted to the user.
      *
-     * <code>
-     * public function getRoles()
-     * {
-     *     return array('ROLE_USER');
-     * }
-     * </code>
-     *
-     * Alternatively, the roles might be stored on a ``roles`` property,
-     * and populated in any number of different ways when the user object
-     * is created.
      * @return array (Role|string)[] The user roles
      */
     public function getRoles()
     {
-        $roles = $this->roles;
-
-        foreach ($this->getGroups() as $group) {
-            $roles = array_merge($roles, $group->getRoles());
-        }
-
-        // we need to make sure to have at least one role
-        $roles[] = static::ROLE_DEFAULT;
-
-        return array_unique($roles);
+        return [self::ROLE_DEFAULT];
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getGroups()
-    {
-        return $this->groups ?: $this->groups = new ArrayCollection();
-    }
-
-
 
     /**
      * Returns the password used to authenticate the user.
@@ -222,11 +179,11 @@ class User implements  UserInterface
      *
      * This can return null if the password was not encoded using a salt.
      *
-     * @return string|null The salt
+     * @return null The salt
      */
     public function getSalt()
     {
-        return $this->salt;
+        return null;
     }
 
     /**
@@ -251,6 +208,7 @@ class User implements  UserInterface
 
     /**
      * @param string $username
+     *
      * @return User
      */
     public function setUsername($username)
@@ -262,6 +220,7 @@ class User implements  UserInterface
 
     /**
      * @param string $name
+     *
      * @return User
      */
     public function setName($name)
@@ -281,6 +240,7 @@ class User implements  UserInterface
 
     /**
      * @param string $password
+     *
      * @return User
      */
     public function setPassword($password)
@@ -291,26 +251,8 @@ class User implements  UserInterface
     }
 
     /**
-     * @param string $plainPassword
-     * @return User
-     */
-    public function setPlainPassword($plainPassword)
-    {
-        $this->plainPassword = $plainPassword;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPlainPassword()
-    {
-        return $this->plainPassword;
-    }
-
-    /**
      * @param string $email
+     *
      * @return User
      */
     public function setEmail($email)
@@ -328,14 +270,123 @@ class User implements  UserInterface
         return $this->email;
     }
 
+    /** @see \Serializable::serialize() */
+    public function serialize()
+    {
+        return serialize(
+            array(
+                $this->id,
+                $this->username,
+                $this->password,
+            )
+        );
+    }
+
+    /** @see \Serializable::unserialize() */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id, $this->username, $this->password,
+            ) = unserialize($serialized);
+    }
+
     /**
-     * @param string $salt
+     * @return bool
+     */
+    public function isAccountNonExpired()
+    {
+        return true;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAccountNonLocked()
+    {
+        return true;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isCredentialsNonExpired()
+    {
+        return true;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEnabled()
+    {
+        return $this->isActive;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getUploadRootDir()
+    {
+        return __DIR__.'/../../../../web/user/';
+    }
+
+    /**
+     * @param string $description
+     *
      * @return User
      */
-    public function setSalt($salt)
+    public function setDescription($description)
     {
-        $this->salt = $salt;
+        $this->description = $description;
 
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+    /**
+     * @param int $age
+     *
+     * @return User
+     */
+    public function setAge($age)
+    {
+        $this->age = $age;
+
+        return $this;
+}
+
+    /**
+     * @return int
+     */
+    public function getAge()
+    {
+        return $this->age;
+    }
+
+    /**
+     * @param string $gender
+     *
+     * @return User
+     */
+    public function setGender($gender)
+    {
+        $this->gender = $gender;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGender()
+    {
+        return $this->gender;
+    }
+
 }
