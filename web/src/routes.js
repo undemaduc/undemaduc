@@ -6,6 +6,7 @@ import ConnectedLogin from './connected/ConnectedLogin';
 
 import UserLoginComponent from './components/UserLoginComponent';
 import LuserLoginComponent from './components/LuserLoginComponent';
+import EventsComponent from './components/EventsComponent';
 
 export default (
 	<Route path="/" component={AppComponent}>
@@ -14,5 +15,6 @@ export default (
 			<Route path="user" component={UserLoginComponent} />
 			<Route path="luser" component={LuserLoginComponent} />
 		</Route>
+		<Route path="events" component={EventsComponent} />
 	</Route>
 );
