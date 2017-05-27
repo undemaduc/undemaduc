@@ -4,9 +4,11 @@ namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
@@ -15,8 +17,6 @@ use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 class User implements AdvancedUserInterface, \Serializable
 {
     const ROLE_DEFAULT = 'ROLE_USER';
-
-    const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
 
     /**
      * @ORM\Id
@@ -27,36 +27,54 @@ class User implements AdvancedUserInterface, \Serializable
 
     /**
      * @var string
+     *
      * @ORM\Column(name="password", type="string", length=64)
+     * @JMS\Exclude
      */
     protected $password;
 
     /**
      * @var string
+     *
+     * @Assert\Length(
+     *     min=5,
+     *     max=64
+     * )
      */
     public $plainPassword;
 
     /**
      * @var string
+     *
      * @ORM\Column(name="email", type="string", length=60, unique=true)
+     * @Assert\Email()
+     * @Assert\NotBlank()
      */
     protected $email;
 
     /**
      * @var string
+     *
      * @ORM\Column(name="name", type="string")
+     * @Assert\NotBlank()
      */
     protected $name;
 
     /**
      * @var string
+     *
      * @ORM\Column(name="description", type="text")
+     * @Assert\NotBlank()
      */
     protected $description;
 
     /**
      * @var int
+     *
      * @ORM\Column(name="age", type="integer")
+     *
+     * @Assert\NotBlank()
+     * @Assert\GreaterThanOrEqual(18)
      */
     protected $age;
 
@@ -64,6 +82,7 @@ class User implements AdvancedUserInterface, \Serializable
      * @var string
      *
      * @ORM\Column(name="gender", type="string")
+     * @Assert\NotBlank()
      */
     protected $gender;
 
@@ -76,6 +95,7 @@ class User implements AdvancedUserInterface, \Serializable
 
     /**
      * @var string
+     *
      * @ORM\Column(name="path", type="string", nullable=true)
      */
     protected $path;
@@ -88,7 +108,9 @@ class User implements AdvancedUserInterface, \Serializable
     protected $matches;
 
     /**
+     * @var bool
      * @ORM\Column(name="is_active", type="boolean")
+     * @JMS\Exclude
      */
     private $isActive;
 
@@ -159,7 +181,7 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Get file.
      *
-     * @return UploadedFile
+     * @return File|UploadedFile
      */
     public function getFile()
     {
@@ -401,6 +423,62 @@ class User implements AdvancedUserInterface, \Serializable
     public function getGender()
     {
         return $this->gender;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isNew()
+    {
+        return isset($this->id);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    /**
+     * @param string $plainPassword
+     *
+     * @return User
+     */
+    public function setPlainPassword($plainPassword)
+    {
+        $this->plainPassword = $plainPassword;
+
+        return $this;
+    }
+
+    /**
+     * @param string $path
+     *
+     * @return User
+     */
+    public function setPath($path)
+    {
+        $this->path = $path;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPath()
+    {
+        return $this->path;
     }
 
 }
