@@ -30,6 +30,8 @@
   "author": "undemaduc",
   "license": "MIT",
   "dependencies": {
+    "bootstrap": "4.0.0-alpha.6",
+    "compass-sass-mixins": "0.12.7",
     "node-sass": "4.5.2",
     "object-assign": "4.1.0",
     "react": "15.5.4",
