@@ -1,7 +1,7 @@
 .umd-box {
 
   display: block;
-  margin: 60px auto 0 auto;
+  margin: 60px auto 60px auto;
   width: 100%;
   max-width: 540px;
   height: auto;
@@ -9,4 +9,8 @@
   border: 2px solid #ccc;
   padding: 65px;
 
+}
+
+.umd-content-container {
+  min-height: 840px;
 }

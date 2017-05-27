@@ -5,9 +5,11 @@
 
 // dependencies
 @import "node_modules/bootstrap/scss/bootstrap";
+@import "node_modules/compass-sass-mixins/lib/compass";
 
 // reusable componenets
 @import "components/buttons";
+@import "components/dropdown";
 
 // specific screen styles
 @import "screens/general";
