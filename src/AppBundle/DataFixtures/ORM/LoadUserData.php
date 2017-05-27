@@ -15,6 +15,9 @@ class LoadUserData implements FixtureInterface
             ->setPassword('test')
             ->setName('Vrajitorul din Oz')
             ->setEmail('oz@example.com')
+            ->setDescription('Vrajesc la festivaluri si caut loc de refugiu')
+            ->setAge('19')
+            ->setGender('M')
         ;
 
         $manager->persist($user1);
