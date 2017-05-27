@@ -413,4 +413,12 @@ class User implements AdvancedUserInterface, \Serializable
         return isset($this->id);
     }
 
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
 }

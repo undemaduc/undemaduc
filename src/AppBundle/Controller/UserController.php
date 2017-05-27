@@ -82,43 +82,30 @@ class UserController extends FOSRestController
         return new View("User Added Successfully", Response::HTTP_OK);
     }
 
-    public function newAction()
+    public function newAction(Request $request)
     {
-        return $this->processForm(new User());
+        return $this->processForm(new User(), $request);
     }
 
-    private function processForm(User $user)
+    private function processForm(User $user, Request $request)
     {
-        $em = $this->getDoctrine()
-                   ->getManager()
-        ;
-
-
+        // 204 for updated
         $statusCode = $user->isNew() ? Response::HTTP_CREATED : Response::HTTP_NO_CONTENT;
 
         $form = $this->createForm(new UserType(), $user);
-        $form->handleRequest($this->getRequest());
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
+            $em = $this->getDoctrine()
+                       ->getManager()
+            ;
+
             $em->persist($user);
             $em->flush();
 
-            $response = new Response();
-            $response->setStatusCode($statusCode);
-
-            // set the `Location` header only when creating new resources
-            if (201 === $statusCode) {
-                $response->headers->set('Location',
-                    $this->generateUrl(
-                        'acme_demo_user_get', array('id' => $user->getId()),
-                        true // absolute
-                    )
-                );
-            }
-
-            return $response;
+            return new View('User ok.', $statusCode);
         }
 
-        return View::create($form, 400);
+        return new View($form, Response::HTTP_BAD_REQUEST);
     }
 }
