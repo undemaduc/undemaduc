@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\File\File;
@@ -125,6 +126,25 @@ class Luser
      * @ORM\Column(name="path5", type="string", nullable=true)
      */
     protected $path5;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Match", mappedBy="luser")
+     */
+    protected $matches;
+
+    /**
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="Messages", mappedBy="fromLuser")
+     */
+    protected $messagesFrom;
+
+    /**
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="Messages", mappedBy="toLuser")
+     */
+    protected $messagesTo;
 
     /**
      * Return the file upload directory

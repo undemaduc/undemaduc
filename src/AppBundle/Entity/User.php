@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\HttpFoundation\File\File;
@@ -100,12 +101,31 @@ class User implements AdvancedUserInterface, \Serializable
     protected $path;
 
     /**
-     * @var bool
+     * @var ArrayCollection
      *
+     * @ORM\OneToMany(targetEntity="Match", mappedBy="user")
+     */
+    protected $matches;
+
+    /**
+     * @var bool
      * @ORM\Column(name="is_active", type="boolean")
      * @JMS\Exclude
      */
     private $isActive;
+
+
+    /**
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="Messages", mappedBy="fromUser")
+     */
+    protected $messagesFrom;
+
+    /**
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="Messages", mappedBy="toUser")
+     */
+    protected $messagesTo;
 
     public function __construct()
     {

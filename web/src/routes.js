@@ -1,21 +1,23 @@
 import React from 'react';
-import { Route, IndexRoute } from 'react-router';
+import { Route, IndexRedirect } from 'react-router';
 
-import App from './components/App';
-import WelcomePage from './components/WelcomePage';
-import UserLoginPage from './components/UserLoginPage';
-import LocationUserLoginPage from './components/LocationUserLoginPage';
-import FuelSavingsPage from './containers/FuelSavingsPage'; // eslint-disable-line import/no-named-as-default
-import AboutPage from './components/AboutPage';
-import NotFoundPage from './components/NotFoundPage';
+import AppComponent from './components/AppComponent';
+import ConnectedLogin from './connected/ConnectedLogin';
+import ConnectedRegister from './connected/ConnectedRegister';
+
+import UserLoginComponent from './components/UserLoginComponent';
+import LuserLoginComponent from './components/LuserLoginComponent';
+import EventsComponent from './components/EventsComponent';
 
 export default (
-  <Route path="/" component={App}>
-    <IndexRoute component={WelcomePage}/>
-    <Route path="user-login-page" component={UserLoginPage}/>
-    <Route path="location-user-login-page" component={LocationUserLoginPage}/>
-    <Route path="fuel-savings" component={FuelSavingsPage}/>
-    <Route path="about" component={AboutPage}/>
-    <Route path="*" component={NotFoundPage}/>
-  </Route>
+	<Route path="/" component={AppComponent}>
+		<IndexRedirect to="/login/user" />
+		
+		<Route path="/register" component={ConnectedRegister} />
+		<Route path="/login" component={ConnectedLogin} >
+			<Route path="user" component={UserLoginComponent} />
+			<Route path="luser" component={LuserLoginComponent} />
+		</Route>
+		<Route path="events" component={EventsComponent} />
+	</Route>
 );

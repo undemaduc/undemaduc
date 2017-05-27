@@ -1,21 +1,7 @@
 .umd-login-page {
 
   .setup__title {
-    line-height: 80px;
-    
-    .underline {
-      position: relative;
-
-      &:after {
-        content: '';
-        width: 100%;
-        height: 2px;
-        background-color: $primary;
-        position: absolute;
-        bottom: -8px;
-        left: 0;
-      }
-    }
+    line-height: 100px;
   }
 
 }

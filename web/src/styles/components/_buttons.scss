@@ -3,4 +3,29 @@
   padding-right: 30px;
   @include box-shadow(0px 15px 15px 0px rgba(0, 0, 0, 0.15));
   @include border-radius(0);
+  text-align: left;
+  font-size: 20px;
+
+  &.umd-btn--icon-right {
+    position: relative;
+
+    .icon {
+      position: absolute;
+      top: 50%;
+      @include translateY(-50%);
+      right: 30px;
+      font-size: 14px;
+    }
+
+  }
+
+  &.umd-btn--facebook {
+    background-color: $facebook;
+    border-color: $facebook;
+
+  }
+
+  &:focus {
+    @include box-shadow(none);
+  }
 }
