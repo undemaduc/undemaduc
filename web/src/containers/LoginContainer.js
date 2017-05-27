@@ -54,21 +54,24 @@ class LoginContainer extends Component {
             <div className="umd-content-container umd-setup-container umd-login-page d-flex flex-column">
                 <h1 className="setup__title">I'm</h1>
 
-                <Dropdown ref="dropdown">
-                    <DropdownTrigger>
-                        <h1>{dropdownLabel}</h1>
-                    </DropdownTrigger>
-                    <DropdownContent>
-                        <ul>
-                            <li>
-                                <h1 onClick={() => this.browseToLoginType("/login/user")}>looking for</h1>
-                            </li>
-                            <li>
-                                <h1 onClick={() => this.browseToLoginType("/login/luser")}>offering</h1>
-                            </li>
-                        </ul>
-                    </DropdownContent>
-                </Dropdown>
+                <div className="umd-dropdown">
+                    <Dropdown ref="dropdown">
+                        <DropdownTrigger>
+                            <h1>{dropdownLabel}</h1>
+                            <i className="demo-icon icon-trig-down toggle-icon"></i>
+                        </DropdownTrigger>
+                        <DropdownContent>
+                            <ul>
+                                <li className="first">
+                                    <h1 onClick={() => this.browseToLoginType("/login/user")}>looking for</h1>
+                                </li>
+                                <li className="last">
+                                    <h1 onClick={() => this.browseToLoginType("/login/luser")}>offering</h1>
+                                </li>
+                            </ul>
+                        </DropdownContent>
+                    </Dropdown>
+                </div>
 
                 <h1 className="setup__title">a place.</h1>
 
