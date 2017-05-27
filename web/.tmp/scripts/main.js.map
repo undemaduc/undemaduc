@@ -1,0 +1,1 @@
+{"version":3,"sources":["main.js"],"names":["jQuery","document","ready","$"],"mappings":";;AAAAA,OAAOC,QAAP,EAAiBC,KAAjB,CAAuB,UAASC,CAAT,EAAW,CAEjC,CAFD","file":"main.js","sourcesContent":["jQuery(document).ready(function($){\r\n\r\n});"]}
