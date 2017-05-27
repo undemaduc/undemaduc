@@ -58,20 +58,35 @@ class UserController extends FOSRestController
         return $this->processForm(new User(), $request);
     }
 
+    /**
+     * @Rest\Post("/user/{id}")
+     *
+     * @param Request $request
+     * @param User $user
+     *
+     * @return View
+     */
+    public function editAction(Request $request, User $user)
+    {
+        return $this->processForm($user, $request);
+    }
+
     private function processForm(User $user, $request)
     {
-        // 204 for updated
+        // 200 for updated
         $statusCode = $user->isNew() ? Response::HTTP_CREATED : Response::HTTP_OK;
 
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $password = $this->get('security.password_encoder')->encodePassword(
-                $user,
-                $user->getPlainPassword()
-            );
-            $user->setPassword($password);
+            if ($user->getPlainPassword()) {
+                $password = $this->get('security.password_encoder')->encodePassword(
+                    $user,
+                    $user->getPlainPassword()
+                );
+                $user->setPassword($password);
+            }
 
             $em = $this->getDoctrine()
                        ->getManager()
