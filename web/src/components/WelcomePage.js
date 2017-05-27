@@ -23,7 +23,7 @@ class WelcomePage extends React.Component {
     render () {
 
         return (
-            <div className="umd-content-container umd-setup-container umd-login-page d-flex flex-column">
+            <div className="umd-content-container umd-setup-container umd-login-page">
 
                 <h1 className="setup__title">I'm</h1>
 
@@ -38,7 +38,7 @@ class WelcomePage extends React.Component {
 
                 <h1 className="setup__title">a place.</h1>
 
-                <button type="button" className="btn btn-primary btn-lg btn-block umd-btn umd-btn--facebook mt-auto">Login with Facebook</button>
+                <button type="button" className="btn btn-primary btn-lg btn-block umd-btn umd-btn--facebook content-action__button--force-bottom umd-btn--icon-right">Login with Facebook <i className="demo-icon icon-arrow-right icon"></i></button>
 
             </div>
         );
