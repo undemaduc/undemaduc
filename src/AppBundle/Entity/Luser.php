@@ -130,9 +130,21 @@ class Luser
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="match", mappedBy="luser")
+     * @ORM\OneToMany(targetEntity="Match", mappedBy="luser")
      */
     protected $matches;
+
+    /**
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="Messages", mappedBy="fromLuser")
+     */
+    protected $messagesFrom;
+
+    /**
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="Messages", mappedBy="toLuser")
+     */
+    protected $messagesTo;
 
     /**
      * Return the file upload directory

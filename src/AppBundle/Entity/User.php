@@ -92,6 +92,19 @@ class User implements AdvancedUserInterface, \Serializable
      */
     private $isActive;
 
+
+    /**
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="Messages", mappedBy="fromUser")
+     */
+    protected $messagesFrom;
+
+    /**
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="Messages", mappedBy="toUser")
+     */
+    protected $messagesTo;
+
     public function __construct()
     {
         $this->isActive = true;
