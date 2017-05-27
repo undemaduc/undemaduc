@@ -11,10 +11,9 @@ class LoadUserData implements FixtureInterface
     {
         $user1 = new User();
         $user1
-            ->setUsername('oz')
+            ->setEmail('oz@example.com')
             ->setPassword('test')
             ->setName('Vrajitorul din Oz')
-            ->setEmail('oz@example.com')
             ->setDescription('Vrajesc la festivaluri si caut loc de refugiu')
             ->setAge('19')
             ->setGender('M')

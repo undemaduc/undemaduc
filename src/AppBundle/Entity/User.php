@@ -26,12 +26,6 @@ class User implements AdvancedUserInterface, \Serializable
 
     /**
      * @var string
-     * @ORM\Column(name="username", type="string", length=25, unique=true)
-     */
-    protected $username;
-
-    /**
-     * @var string
      * @ORM\Column(name="password", type="string", length=64)
      */
     protected $password;
@@ -187,16 +181,6 @@ class User implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * Returns the username used to authenticate the user.
-     *
-     * @return string The username
-     */
-    public function getUsername()
-    {
-        return $this->username;
-    }
-
-    /**
      * Removes sensitive data from the user.
      *
      * This is important if, at any given point, sensitive information like
@@ -204,6 +188,7 @@ class User implements AdvancedUserInterface, \Serializable
      */
     public function eraseCredentials()
     {
+        $this->plainPassword = null;
     }
 
     /**
@@ -270,13 +255,21 @@ class User implements AdvancedUserInterface, \Serializable
         return $this->email;
     }
 
+    /**
+     * @return string
+     */
+    public function getUsername()
+    {
+        return $this->email;
+    }
+
     /** @see \Serializable::serialize() */
     public function serialize()
     {
         return serialize(
             array(
                 $this->id,
-                $this->username,
+                $this->email,
                 $this->password,
             )
         );
@@ -286,7 +279,7 @@ class User implements AdvancedUserInterface, \Serializable
     public function unserialize($serialized)
     {
         list (
-            $this->id, $this->username, $this->password,
+            $this->id, $this->email, $this->password,
             ) = unserialize($serialized);
     }
 
