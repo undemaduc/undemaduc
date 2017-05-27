@@ -1,0 +1,60 @@
+.umd-navbar {
+
+  background: $background;
+  padding: 0;
+  margin-bottom: 30px;
+  border-bottom: 2px solid #272a38;
+
+  .navbar-brand {
+    display: inline-block;
+    color: $primary;
+    font-size: 35px;
+    padding: 0 0 25px 0;
+
+    &:hover {
+      color: $primary;
+    }
+  }
+
+  .navbar-nav {
+    width: 100%;
+  }
+
+  .nav-item {
+
+    position: relative;
+    padding: 0 30px 25px 0;
+
+    .nav-link {
+      font-size: 35px;
+      color: white;
+      padding: 0;
+    }
+
+    &.active,
+    &:hover {
+
+      .nav-link {
+        color: $primary;
+      }
+
+      &:after {
+        content: '';
+        width: 35px;
+        height: 2px;
+        background: $primary;
+        z-index: 99;
+        position: absolute;
+        bottom: 0;
+        left: 7px;
+      }
+
+    }
+
+    &.nav-item--last {
+      padding-right: 0;
+    }
+
+  }
+
+}

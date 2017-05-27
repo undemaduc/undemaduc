@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link, IndexLink } from 'react-router';
+import Navigation from './elements/Navigation';
 
 // This is a class-based component because the current
 // version of hot reloading won't hot reload a stateless
@@ -10,6 +11,8 @@ class App extends React.Component {
     return (
 
       <div className="umd-box">
+
+        <Navigation />
 
         {this.props.children}
 
