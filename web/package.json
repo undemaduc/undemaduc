@@ -30,9 +30,11 @@
   "author": "undemaduc",
   "license": "MIT",
   "dependencies": {
+    "axios": "0.16.1",
     "bootstrap": "4.0.0-alpha.6",
     "compass-sass-mixins": "0.12.7",
     "hover.css": "2.2.0",
+    "immutability-helper": "2.2.2",
     "node-sass": "4.5.2",
     "object-assign": "4.1.0",
     "react": "15.5.4",
