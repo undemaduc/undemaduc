@@ -50,7 +50,7 @@ class UserController extends FOSRestController
     /**
      * @Rest\Post("/user/create")
      */
-    protected function createUser(Request $request)
+    public function createUser(Request $request)
     {
         $user = new User();
 
@@ -67,7 +67,6 @@ class UserController extends FOSRestController
         $user->setAge(18)
             ->setDescription('non')
             ->setGender('M')
-            ->setFile($image)
             ->setName($name)
             ->setEmail($email)
             ->setPassword($password)
@@ -81,10 +80,7 @@ class UserController extends FOSRestController
         $em->persist($user);
         $em->flush();
 
-
-        $errors = [ 'errors' => $this->getErrorsFromForm($form) ];
-
-        return new View($errors, Response::HTTP_BAD_REQUEST);
+        return new View($user, Response::HTTP_BAD_REQUEST);
     }
 
     private function getErrorsFromForm(FormInterface $form)
