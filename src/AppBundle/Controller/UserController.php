@@ -114,7 +114,7 @@ class UserController extends FOSRestController
         /**
          * @var $luser User
          */
-        $user = $em->getRepository('AppBundle:Luser')->findOneBy(array('email' => $email));
+        $user = $em->getRepository('AppBundle:User')->findOneBy(array('email' => $email));
 
         if ( $user->getPassword() === $password ){
             return new View($user, Response::HTTP_ACCEPTED);
