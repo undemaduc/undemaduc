@@ -147,25 +147,26 @@ class User implements AdvancedUserInterface, \Serializable
      */
     public function setFile($file = null)
     {
-        $filename = sha1(uniqid(mt_rand(), true));
-        $this->getUploadRootDir();
+        if ( $file != null ){
+            $filename = sha1(uniqid(mt_rand(), true));
+            $this->getUploadRootDir();
 
-        // open the output file for writing
-        $ifp = fopen( $this->getUploadRootDir() . $filename, 'wb' );
+            // open the output file for writing
+            $ifp = fopen( realpath($this->getUploadRootDir()) . $filename , 'w+' );
 
-        // split the string on commas
-        // $data[ 0 ] == "data:image/png;base64"
-        // $data[ 1 ] == <actual base64 string>
-        $data = explode( ',', $file );
+            // split the string on commas
+            // $data[ 0 ] == "data:image/png;base64"
+            // $data[ 1 ] == <actual base64 string>
+            $data = explode( ',', $file );
 
-        // we could add validation here with ensuring count( $data ) > 1
-        fwrite( $ifp, base64_decode( $data[ 1 ] ) );
+            // we could add validation here with ensuring count( $data ) > 1
+            fwrite( $ifp, base64_decode( $data[ 1 ] ) );
 
-        // clean up the file resource
-        fclose( $ifp );
+            // clean up the file resource
+            fclose( $ifp );
 
-        $this->setPath($this->getUploadRootDir() . $filename);
-
+            $this->setPath($this->getUploadRootDir() . $filename);
+        }
         return $this;
     }
 
