@@ -35,10 +35,7 @@ function _login(email, password, url, types, dispatch) {
         data: { email, password }
     }).then(response => {
         dispatch({ type: types.succeeded, data: response.data });
-    }).catch(error => {
-        const errMessage = error.message;
-        console.log("LOGIN ERROR => ", error);
-        
-        dispatch({ type: LOGIN_FAILED, reason: errMessage });
+    }).catch(error => {        
+        dispatch({ type: LOGIN_FAILED, error });
     });
 }

@@ -22,7 +22,7 @@ class LoginContainer extends Component {
         this._setLoginTypeFromProps(this.props);
     }
 
-    componentWillReceiveProps(nextProps) {
+    componentWillReceiveProps(nextProps) {        
         this._setLoginTypeFromProps(nextProps);
     }
 
@@ -52,8 +52,8 @@ class LoginContainer extends Component {
 
         const childrenWithProps = React.Children.map(this.props.children,
             (child) => React.cloneElement(child, {
-                loginUser: this.props.loginUser,
-                loginLuser: this.props.loginLuser
+                loginUser: () => this.props.loginUser(),
+                loginLuser: (email, password) => this.props.loginLuser(email, password)
             })
         );
 
@@ -66,7 +66,7 @@ class LoginContainer extends Component {
                         <Dropdown ref="dropdown">
                             <DropdownTrigger>
                                 <h1>{dropdownLabel}</h1>
-                                <i className="demo-icon icon-trig-down toggle-icon"></i>
+                                <i className="demo-icon icon-trig-down toggle-icon"/>
                             </DropdownTrigger>
                             <DropdownContent>
                                 <ul>
