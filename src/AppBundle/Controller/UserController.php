@@ -79,7 +79,26 @@ class UserController extends FOSRestController
         $em->persist($user);
         $em->flush();
 
-        return new View("User Added Successfully", Response::HTTP_OK);
+
+        $errors = [ 'errors' => $this->getErrorsFromForm($form) ];
+
+        return new View($errors, Response::HTTP_BAD_REQUEST);
+    }
+
+    private function getErrorsFromForm(FormInterface $form)
+    {
+        $errors = array();
+        foreach ($form->getErrors(false) as $error) {
+            $errors[] = $error->getMessage();
+        }
+        foreach ($form->all() as $childForm) {
+            if ($childForm instanceof FormInterface) {
+                if ($childErrors = $this->getErrorsFromForm($childForm)) {
+                    $errors[$childForm->getName()] = $childErrors;
+                }
+            }
+        }
+        return $errors;
     }
 
     /**
