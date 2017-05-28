@@ -88,7 +88,7 @@ class User implements AdvancedUserInterface, \Serializable
 
     /**
      * @var string
-     * @ORM\Column(name="phone_number", type="string")
+     * @ORM\Column(name="phone_number", type="string", nullable=true)
      */
     protected $phoneNumber;
 
