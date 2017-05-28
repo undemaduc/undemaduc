@@ -20,6 +20,7 @@ class LoadLuserData implements FixtureInterface
             ->setBeds(8)
             ->setRooms(3)
             ->setDisable(false)
+            ->setPhoneNumber(0000)
         ;
 
         $manager->persist($luser1);
