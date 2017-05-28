@@ -6,7 +6,7 @@ class Navigation extends React.Component {
     render () {
 
         return (
-            <nav className="umd-navbar umd-navbar--unlogged navbar justify-content-start flex-row">
+            <nav className="umd-navbar navbar justify-content-start flex-row">
                 <a className="navbar-brand" href="#"><i className="demo-icon icon-logo"></i></a>
                 <ul className="navbar-nav flex-row">
                     <li className="nav-item active">

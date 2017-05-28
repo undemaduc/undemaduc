@@ -6,6 +6,7 @@
 // dependencies
 @import "node_modules/bootstrap/scss/bootstrap";
 @import "node_modules/compass-sass-mixins/lib/compass";
+@import "animate";
 
 // fontello files
 @import "fontello/fontello";
@@ -24,3 +25,4 @@
 @import "screens/general";
 @import "screens/box";
 @import "screens/login";
+@import "screens/events";
