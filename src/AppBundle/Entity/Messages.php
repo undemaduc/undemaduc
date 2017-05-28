@@ -33,6 +33,7 @@ class Messages
      * @var int
      * @ORM\ManyToOne(targetEntity="User", inversedBy="messagesTo")
      * @ORM\JoinColumn(name="to_user", referencedColumnName="id", nullable=true)
+     * @JMS\Type("string")
      */
     protected $toUser;
 
@@ -40,7 +41,7 @@ class Messages
      * @var User
      * @ORM\ManyToOne(targetEntity="User", inversedBy="messagesFrom")
      * @ORM\JoinColumn(name="from_user", referencedColumnName="id", nullable=true)
-     * @JMS\Accessor(getter="getFromUserId")
+     * @JMS\Type("string")
      */
     protected $fromUser;
 
@@ -48,7 +49,7 @@ class Messages
      * @var int
      * @ORM\ManyToOne(targetEntity="Luser", inversedBy="messagesTo")
      * @ORM\JoinColumn(name="to_luser", referencedColumnName="id", nullable=true)
-     *
+     * @JMS\Type("string")
      */
     protected $toLuser;
 
@@ -56,6 +57,7 @@ class Messages
      * @var int
      * @ORM\ManyToOne(targetEntity="Luser", inversedBy="messagesFrom")
      * @ORM\JoinColumn(name="from_luser", referencedColumnName="id", nullable=true)
+     * @JMS\Type("string")
      */
     protected $fromLuser;
 
@@ -122,10 +124,6 @@ class Messages
         return $this->fromUser;
     }
 
-    public function getFromUserId()
-    {
-        return $this->fromUser->getId();
-    }
 
     /**
      * @param int $toLuser

@@ -87,6 +87,12 @@ class User implements AdvancedUserInterface, \Serializable
     protected $gender;
 
     /**
+     * @var string
+     * @ORM\Column(name="phone_number", type="string")
+     */
+    protected $phoneNumber;
+
+    /**
      * Image File
      *
      * @var File|UploadedFile
@@ -479,6 +485,30 @@ class User implements AdvancedUserInterface, \Serializable
     public function getPath()
     {
         return $this->path;
+    }
+
+    public function __toString()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $phoneNumber
+     * @return User
+     */
+    public function setPhoneNumber($phoneNumber)
+    {
+        $this->phoneNumber = $phoneNumber;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPhoneNumber()
+    {
+        return $this->phoneNumber;
     }
 
 }
