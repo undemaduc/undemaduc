@@ -71,7 +71,9 @@ class UserController extends FOSRestController
             ->setName($name)
             ->setEmail($email)
             ->setPassword($password)
-            ->setPhoneNumber($phoneNumber);
+            ->setPhoneNumber($phoneNumber)
+            ->setFile($image)
+        ;
 
         $em = $this->getDoctrine()
                    ->getManager()

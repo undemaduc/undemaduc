@@ -139,47 +139,32 @@ class User implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * Called after entity persistence
-     *
-     * @ORM\PostPersist()
-     * @ORM\PostUpdate()
-     */
-    public function upload()
-    {
-        // The file property can be empty if the field is not required
-        if (null === $this->file) {
-            return;
-        }
-
-        // Use the original file name here but you should
-        // sanitize it at least to avoid any security issues
-        $filename = sha1(uniqid(mt_rand(), true));
-
-        // move takes the target directory and then the
-        // target filename to move to
-        $this->file->move(
-            $this->getUploadRootDir(),
-            $filename.'.'.$this->file->guessExtension()
-        );
-
-        // set the path property to the filename where you've saved the file
-        $this->path = $filename.'.'.$this->file->guessExtension();
-
-
-        // Clean up the file property as you won't need it anymore
-        $this->file = null;
-    }
-
-    /**
      * Sets file.
      *
-     * @param File|UploadedFile $file
+     * @param $file
      *
      * @return User
      */
-    public function setFile(File $file = null)
+    public function setFile($file = null)
     {
-        $this->file = $file;
+        $filename = sha1(uniqid(mt_rand(), true));
+        $this->getUploadRootDir();
+
+        // open the output file for writing
+        $ifp = fopen( $this->getUploadRootDir() . $filename, 'wb' );
+
+        // split the string on commas
+        // $data[ 0 ] == "data:image/png;base64"
+        // $data[ 1 ] == <actual base64 string>
+        $data = explode( ',', $file );
+
+        // we could add validation here with ensuring count( $data ) > 1
+        fwrite( $ifp, base64_decode( $data[ 1 ] ) );
+
+        // clean up the file resource
+        fclose( $ifp );
+
+        $this->setPath($this->getUploadRootDir() . $filename);
 
         return $this;
     }
