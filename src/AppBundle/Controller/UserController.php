@@ -130,7 +130,7 @@ class UserController extends FOSRestController
     {
         $em = $this->getDoctrine()->getManager();
 
-        $results = $em->getRepository('AppBundle:user')->findBy(array(),array(),15);
+        $results = $em->getRepository('AppBundle:User')->findBy(array(),array(),15);
 
         return new View($results, Response::HTTP_ACCEPTED);
     }
