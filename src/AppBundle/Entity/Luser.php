@@ -39,13 +39,13 @@ class Luser
 
     /**
      * @var string
-     * @ORM\Column(name="phone_number", type="string")
+     * @ORM\Column(name="phone_number", type="string", nullable=true)
      */
     protected $phoneNumber;
 
     /**
      * @var string
-     * @ORM\Column(name="town", type="string")
+     * @ORM\Column(name="town", type="string", nullable=true)
      */
     protected $town;
 
