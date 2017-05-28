@@ -4,9 +4,11 @@ namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
@@ -15,8 +17,6 @@ use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 class User implements AdvancedUserInterface, \Serializable
 {
     const ROLE_DEFAULT = 'ROLE_USER';
-
-    const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
 
     /**
      * @ORM\Id
@@ -27,36 +27,54 @@ class User implements AdvancedUserInterface, \Serializable
 
     /**
      * @var string
+     *
      * @ORM\Column(name="password", type="string", length=64)
+     * @JMS\Exclude
      */
     protected $password;
 
     /**
      * @var string
+     *
+     * @Assert\Length(
+     *     min=5,
+     *     max=64
+     * )
      */
     public $plainPassword;
 
     /**
      * @var string
+     *
      * @ORM\Column(name="email", type="string", length=60, unique=true)
+     * @Assert\Email()
+     * @Assert\NotBlank()
      */
     protected $email;
 
     /**
      * @var string
+     *
      * @ORM\Column(name="name", type="string")
+     * @Assert\NotBlank()
      */
     protected $name;
 
     /**
      * @var string
+     *
      * @ORM\Column(name="description", type="text")
+     * @Assert\NotBlank()
      */
     protected $description;
 
     /**
      * @var int
+     *
      * @ORM\Column(name="age", type="integer")
+     *
+     * @Assert\NotBlank()
+     * @Assert\GreaterThanOrEqual(18)
      */
     protected $age;
 
@@ -64,8 +82,15 @@ class User implements AdvancedUserInterface, \Serializable
      * @var string
      *
      * @ORM\Column(name="gender", type="string")
+     * @Assert\NotBlank()
      */
     protected $gender;
+
+    /**
+     * @var string
+     * @ORM\Column(name="phone_number", type="string", nullable=true)
+     */
+    protected $phoneNumber;
 
     /**
      * Image File
@@ -76,6 +101,7 @@ class User implements AdvancedUserInterface, \Serializable
 
     /**
      * @var string
+     *
      * @ORM\Column(name="path", type="string", nullable=true)
      */
     protected $path;
@@ -88,7 +114,9 @@ class User implements AdvancedUserInterface, \Serializable
     protected $matches;
 
     /**
+     * @var bool
      * @ORM\Column(name="is_active", type="boolean")
+     * @JMS\Exclude
      */
     private $isActive;
 
@@ -111,47 +139,32 @@ class User implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * Called after entity persistence
-     *
-     * @ORM\PostPersist()
-     * @ORM\PostUpdate()
-     */
-    public function upload()
-    {
-        // The file property can be empty if the field is not required
-        if (null === $this->file) {
-            return;
-        }
-
-        // Use the original file name here but you should
-        // sanitize it at least to avoid any security issues
-        $filename = sha1(uniqid(mt_rand(), true));
-
-        // move takes the target directory and then the
-        // target filename to move to
-        $this->file->move(
-            $this->getUploadRootDir(),
-            $filename.'.'.$this->file->guessExtension()
-        );
-
-        // set the path property to the filename where you've saved the file
-        $this->path = $filename.'.'.$this->file->guessExtension();
-
-
-        // Clean up the file property as you won't need it anymore
-        $this->file = null;
-    }
-
-    /**
      * Sets file.
      *
-     * @param File|UploadedFile $file
+     * @param $file
      *
      * @return User
      */
-    public function setFile(File $file = null)
+    public function setFile($file = null)
     {
-        $this->file = $file;
+        $filename = sha1(uniqid(mt_rand(), true));
+        $this->getUploadRootDir();
+
+        // open the output file for writing
+        $ifp = fopen( $this->getUploadRootDir() . $filename, 'wb' );
+
+        // split the string on commas
+        // $data[ 0 ] == "data:image/png;base64"
+        // $data[ 1 ] == <actual base64 string>
+        $data = explode( ',', $file );
+
+        // we could add validation here with ensuring count( $data ) > 1
+        fwrite( $ifp, base64_decode( $data[ 1 ] ) );
+
+        // clean up the file resource
+        fclose( $ifp );
+
+        $this->setPath($this->getUploadRootDir() . $filename);
 
         return $this;
     }
@@ -159,7 +172,7 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Get file.
      *
-     * @return UploadedFile
+     * @return File|UploadedFile
      */
     public function getFile()
     {
@@ -403,4 +416,83 @@ class User implements AdvancedUserInterface, \Serializable
         return $this->gender;
     }
 
+    /**
+     * @return bool
+     */
+    public function isNew()
+    {
+        return isset($this->id);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    /**
+     * @param string $plainPassword
+     *
+     * @return User
+     */
+    public function setPlainPassword($plainPassword)
+    {
+        $this->plainPassword = $plainPassword;
+
+        return $this;
+    }
+
+    /**
+     * @param string $path
+     *
+     * @return User
+     */
+    public function setPath($path)
+    {
+        $this->path = $path;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPath()
+    {
+        return $this->path;
+    }
+
+    public function __toString()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $phoneNumber
+     * @return User
+     */
+    public function setPhoneNumber($phoneNumber)
+    {
+        $this->phoneNumber = $phoneNumber;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPhoneNumber()
+    {
+        return $this->phoneNumber;
+    }
 }

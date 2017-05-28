@@ -9,8 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @package AppBundle\Entity
  *
  * @ORM\Entity(repositoryClass="AppBundle\Repository\MatchRepository")
- * @ORM\Table("match")
- *
+ * @ORM\Table("match_making")
  */
 class Match
 {
@@ -23,13 +22,13 @@ class Match
 
     /**
      * @var bool
-     * @ORM\Column(name="l_to_u", type="boolean", options={"default" : "0"})
+     * @ORM\Column(name="l_to_u", type="boolean", nullable=true)
      */
     protected $l_to_u;
 
     /**
      * @var bool
-     * @ORM\Column(name="u_to_l", type="boolean", options={"default" : "0"})
+     * @ORM\Column(name="u_to_l", type="boolean", nullable=true)
      */
     protected $u_to_l;
 

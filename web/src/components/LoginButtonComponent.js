@@ -22,7 +22,8 @@ class LoginButtonComponent extends Component {
 LoginButtonComponent.propTypes = {
 	onButtonClick: PropTypes.func.isRequired,
 	buttonLabel: PropTypes.string.isRequired,
-	className: PropTypes.string.isRequired
+	className: PropTypes.string.isRequired,
+	iconClassName: PropTypes.string.isRequired
 };
 
 export default LoginButtonComponent;

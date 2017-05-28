@@ -39,6 +39,18 @@ class Luser
 
     /**
      * @var string
+     * @ORM\Column(name="phone_number", type="string", nullable=true)
+     */
+    protected $phoneNumber;
+
+    /**
+     * @var string
+     * @ORM\Column(name="town", type="string", nullable=true)
+     */
+    protected $town;
+
+    /**
+     * @var string
      * @ORM\Column(name="password", type="string")
      */
     protected $password;
@@ -283,7 +295,24 @@ class Luser
      */
     public function setFile5($file5)
     {
-        $this->file5 = $file5;
+        $filename = sha1(uniqid(mt_rand(), true));
+        $this->getUploadRootDir();
+
+        // open the output file for writing
+        $ifp = fopen( $this->getUploadRootDir() . $filename, 'wb' );
+
+        // split the string on commas
+        // $data[ 0 ] == "data:image/png;base64"
+        // $data[ 1 ] == <actual base64 string>
+        $data = explode( ',', $file5 );
+
+        // we could add validation here with ensuring count( $data ) > 1
+        fwrite( $ifp, base64_decode( $data[ 1 ] ) );
+
+        // clean up the file resource
+        fclose( $ifp );
+
+        $this->setPath5($this->getUploadRootDir() . $filename);
 
         return $this;
     }
@@ -340,7 +369,24 @@ class Luser
      */
     public function setFile4($file4)
     {
-        $this->file4 = $file4;
+        $filename = sha1(uniqid(mt_rand(), true));
+        $this->getUploadRootDir();
+
+        // open the output file for writing
+        $ifp = fopen( $this->getUploadRootDir() . $filename, 'wb' );
+
+        // split the string on commas
+        // $data[ 0 ] == "data:image/png;base64"
+        // $data[ 1 ] == <actual base64 string>
+        $data = explode( ',', $file4 );
+
+        // we could add validation here with ensuring count( $data ) > 1
+        fwrite( $ifp, base64_decode( $data[ 1 ] ) );
+
+        // clean up the file resource
+        fclose( $ifp );
+
+        $this->setPath4($this->getUploadRootDir() . $filename);
 
         return $this;
     }
@@ -378,7 +424,24 @@ class Luser
      */
     public function setFile3($file3)
     {
-        $this->file3 = $file3;
+        $filename = sha1(uniqid(mt_rand(), true));
+        $this->getUploadRootDir();
+
+        // open the output file for writing
+        $ifp = fopen( $this->getUploadRootDir() . $filename, 'wb' );
+
+        // split the string on commas
+        // $data[ 0 ] == "data:image/png;base64"
+        // $data[ 1 ] == <actual base64 string>
+        $data = explode( ',', $file3 );
+
+        // we could add validation here with ensuring count( $data ) > 1
+        fwrite( $ifp, base64_decode( $data[ 1 ] ) );
+
+        // clean up the file resource
+        fclose( $ifp );
+
+        $this->setPath3($this->getUploadRootDir() . $filename);
 
         return $this;
     }
@@ -416,7 +479,24 @@ class Luser
      */
     public function setFile2($file2)
     {
-        $this->file2 = $file2;
+        $filename = sha1(uniqid(mt_rand(), true));
+        $this->getUploadRootDir();
+
+        // open the output file for writing
+        $ifp = fopen( $this->getUploadRootDir() . $filename, 'wb' );
+
+        // split the string on commas
+        // $data[ 0 ] == "data:image/png;base64"
+        // $data[ 1 ] == <actual base64 string>
+        $data = explode( ',', $file2 );
+
+        // we could add validation here with ensuring count( $data ) > 1
+        fwrite( $ifp, base64_decode( $data[ 1 ] ) );
+
+        // clean up the file resource
+        fclose( $ifp );
+
+        $this->setPath2($this->getUploadRootDir() . $filename);
 
         return $this;
     }
@@ -454,7 +534,24 @@ class Luser
      */
     public function setFile1($file1)
     {
-        $this->file1 = $file1;
+        $filename = sha1(uniqid(mt_rand(), true));
+        $this->getUploadRootDir();
+
+        // open the output file for writing
+        $ifp = fopen( $this->getUploadRootDir() . $filename, 'wb' );
+
+        // split the string on commas
+        // $data[ 0 ] == "data:image/png;base64"
+        // $data[ 1 ] == <actual base64 string>
+        $data = explode( ',', $file1 );
+
+        // we could add validation here with ensuring count( $data ) > 1
+        fwrite( $ifp, base64_decode( $data[ 1 ] ) );
+
+        // clean up the file resource
+        fclose( $ifp );
+
+        $this->setPath1($this->getUploadRootDir() . $filename);
 
         return $this;
     }
@@ -524,5 +621,47 @@ class Luser
         return $this->beds;
     }
 
+    public function __toString()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $phoneNumber
+     * @return Luser
+     */
+    public function setPhoneNumber($phoneNumber)
+    {
+        $this->phoneNumber = $phoneNumber;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPhoneNumber()
+    {
+        return $this->phoneNumber;
+    }
+
+    /**
+     * @param string $town
+     * @return Luser
+     */
+    public function setTown($town)
+    {
+        $this->town = $town;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTown()
+    {
+        return $this->town;
+    }
 
 }

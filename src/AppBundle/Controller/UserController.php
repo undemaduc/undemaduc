@@ -2,10 +2,10 @@
 
 namespace AppBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use AppBundle\Form\UserType;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use FOS\RestBundle\View\View;
@@ -48,22 +48,95 @@ class UserController extends FOSRestController
     }
 
     /**
-     * @Rest\Post("/user")
+     * @Rest\Post("/user/create")
      */
-    public function postAction(Request $request)
+    protected function createUser(Request $request)
     {
-        $data = new User;
+        $user = new User();
+
         $name = $request->get('name');
-        if (empty($name)) {
-            return new View("NULL VALUES ARE NOT ALLOWED", Response::HTTP_NOT_ACCEPTABLE);
+        $email = $request->get('email');
+        $password = $request->get('password');
+        $phoneNumber = $request->get('phone_number');
+        $image = $request->get('image');
+
+        if (empty($name) && empty($email) && empty($password) && empty($phoneNumber) && empty($image)){
+            return new View("Bad Request", Response::HTTP_BAD_REQUEST);
         }
-        $data->setName($name);
+
+        $user->setAge(18)
+            ->setDescription('non')
+            ->setGender('M')
+            ->setFile($image)
+            ->setName($name)
+            ->setEmail($email)
+            ->setPassword($password)
+            ->setPhoneNumber($phoneNumber)
+            ->setFile($image)
+        ;
+
         $em = $this->getDoctrine()
                    ->getManager()
         ;
-        $em->persist($data);
+        $em->persist($user);
         $em->flush();
 
-        return new View("User Added Successfully", Response::HTTP_OK);
+
+        $errors = [ 'errors' => $this->getErrorsFromForm($form) ];
+
+        return new View($errors, Response::HTTP_BAD_REQUEST);
     }
+
+    private function getErrorsFromForm(FormInterface $form)
+    {
+        $errors = array();
+        foreach ($form->getErrors(false) as $error) {
+            $errors[] = $error->getMessage();
+        }
+        foreach ($form->all() as $childForm) {
+            if ($childForm instanceof FormInterface) {
+                if ($childErrors = $this->getErrorsFromForm($childForm)) {
+                    $errors[$childForm->getName()] = $childErrors;
+                }
+            }
+        }
+        return $errors;
+    }
+
+    /**
+     * @param Request $request
+     * @return View
+     * @Rest\Post("/user/login")
+     */
+    public function loginUser(Request $request)
+    {
+        $email = $request->get('email');
+        $password = $request->get('password');
+
+        $em = $this->getDoctrine()->getManager();
+
+        /**
+         * @var $luser User
+         */
+        $user = $em->getRepository('AppBundle:Luser')->findOneBy(array('email' => $email));
+
+        if ( $user->getPassword() === $password ){
+            return new View($user, Response::HTTP_ACCEPTED);
+        }else{
+            return new View($user, Response::HTTP_BAD_REQUEST);
+        }
+    }
+
+    /**
+     * @Rest\Get("/users")
+     */
+    public function getUsers()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $results = $em->getRepository('AppBundle:user')->findBy(array(),array(),15);
+
+        return new View($results, Response::HTTP_ACCEPTED);
+    }
+
 }
