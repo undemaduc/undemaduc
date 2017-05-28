@@ -2,14 +2,13 @@ import React, { Component } from 'react';
 import Event from './elements/Event';
 import autoBind from 'react-autobind';
 
-class EventsComponent extends React.Component {
-
+class EventsComponent extends Component {
     constructor(props) {
         super(props);
         autoBind(this);
 
         this.state = {
-            events : [
+            events: [
                 {
                     title: 'Untold 1',
                     date: 'August 22-25, 2017',
@@ -51,30 +50,30 @@ class EventsComponent extends React.Component {
 
                     </div>
                 </div>
-                
+
                 <div className="events-container d-flex justify-content-between">
-                    {this.state.events.map(function(event, i) {
-                        return <Event image={event.image} title={event.title} date={event.date} hide={event.hide} />
-                    })}
+                    {this.state.events.map((event, i) => <Event key={`event-${i}`}
+                        image={event.image}
+                        title={event.title}
+                        date={event.date}
+                        hide={event.hide} />
+                    )}
                 </div>
             </div>
         );
     }
 
-    nextEvent () {
+    nextEvent() {
+        let flagged = false;
+        let count = this.state.events.length;
 
-        var flagged = false;
-        var count = this.state.events.length;
-
-        const eventsMapped = this.state.events.map(function(event, i) {
-
+        const eventsMapped = this.state.events.map(function (event, i) {
             if (false == event.hide && !flagged && i !== count - 1) {
                 event.hide = true;
                 flagged = true;
             }
 
             return event;
-
         });
 
         this.setState({
@@ -82,10 +81,10 @@ class EventsComponent extends React.Component {
         });
     }
 
-    previousEvent () {
-        var flagged = false;
+    previousEvent() {
+        let flagged = false;
 
-        const eventsMapped = this.state.events.slice(0).reverse().map(function(event, i) {
+        const eventsMapped = this.state.events.slice(0).reverse().map(function (event, i) {
 
             if (true == event.hide && !flagged && i != 0) {
                 event.hide = false;

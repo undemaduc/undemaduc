@@ -13,6 +13,17 @@
         text-decoration: underline;
       }
     }
+
+    .register-user {
+      display: block;
+      font-size: 16px;
+      color: #8d8f96;
+      margin-top: 100px;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
   }
 
 }
