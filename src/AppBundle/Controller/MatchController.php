@@ -28,11 +28,6 @@ class MatchController extends Controller
             return new View("NO MATCHES FOUND", Response::HTTP_EXPECTATION_FAILED);
         }
 
-        $encoders = array(new XmlEncoder(), new JsonEncoder());
-        $normalizers = array(new ObjectNormalizer());
-
-        $serializer = new Serializer($normalizers, $encoders);
-
         return new View($allMatches, Response::HTTP_ACCEPTED);
     }
 

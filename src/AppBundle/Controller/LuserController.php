@@ -98,6 +98,10 @@ class LuserController extends Controller
            'town' => $town
         ),array(),15);
 
+        if (empty($result)){
+            return new View("No results found", Response::HTTP_EXPECTATION_FAILED);
+        }
+
         return new View($result, Response::HTTP_ACCEPTED);
     }
 }

@@ -132,6 +132,10 @@ class UserController extends FOSRestController
 
         $results = $em->getRepository('AppBundle:User')->findBy(array(),array(),15);
 
+        if ( empty($results) ){
+            return new View("No results found", Response::HTTP_EXPECTATION_FAILED);
+        }
+
         return new View($results, Response::HTTP_ACCEPTED);
     }
 
