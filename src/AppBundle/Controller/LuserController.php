@@ -75,4 +75,18 @@ class LuserController extends Controller
             return new View($luser, Response::HTTP_BAD_REQUEST);
         }
     }
+
+    /**
+     * @Rest\Get(/{town})
+     */
+    public function getByTown($town)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $results = $em->getRepository('AppBundle:Luser')->findBy(array(
+            'town' => $town
+        ),array(),15);
+
+        return new View($results, Response::HTTP_ACCEPTED);
+    }
 }

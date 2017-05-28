@@ -106,4 +106,16 @@ class UserController extends FOSRestController
         }
     }
 
+    /**
+     * @Rest\Get("/users")
+     */
+    public function getUsers()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $results = $em->getRepository('AppBundle:user')->findBy(array(),array(),15);
+
+        return new View($results, Response::HTTP_ACCEPTED);
+    }
+
 }
