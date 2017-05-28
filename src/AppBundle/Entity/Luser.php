@@ -39,6 +39,18 @@ class Luser
 
     /**
      * @var string
+     * @ORM\Column(name="phone_number", type="string")
+     */
+    protected $phoneNumber;
+
+    /**
+     * @var string
+     * @ORM\Column(name="town", type="string")
+     */
+    protected $town;
+
+    /**
+     * @var string
      * @ORM\Column(name="password", type="string")
      */
     protected $password;
@@ -524,5 +536,47 @@ class Luser
         return $this->beds;
     }
 
+    public function __toString()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $phoneNumber
+     * @return Luser
+     */
+    public function setPhoneNumber($phoneNumber)
+    {
+        $this->phoneNumber = $phoneNumber;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPhoneNumber()
+    {
+        return $this->phoneNumber;
+    }
+
+    /**
+     * @param string $town
+     * @return Luser
+     */
+    public function setTown($town)
+    {
+        $this->town = $town;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTown()
+    {
+        return $this->town;
+    }
 
 }

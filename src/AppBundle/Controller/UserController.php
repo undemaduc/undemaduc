@@ -48,55 +48,37 @@ class UserController extends FOSRestController
     }
 
     /**
-     * @Rest\Post("/user")
-     * @param Request $request
-     *
-     * @return View
+     * @Rest\Post("/user/create")
      */
-    public function newAction(Request $request)
+    protected function createUser(Request $request)
     {
-        return $this->processForm(new User(), $request);
-    }
+        $user = new User();
 
-    /**
-     * @Rest\Post("/user/{id}")
-     *
-     * @param Request $request
-     * @param User $user
-     *
-     * @return View
-     */
-    public function editAction(Request $request, User $user)
-    {
-        return $this->processForm($user, $request);
-    }
+        $name = $request->get('name');
+        $email = $request->get('email');
+        $password = $request->get('password');
+        $phoneNumber = $request->get('phone_number');
+        $image = $request->get('image');
 
-    private function processForm(User $user, $request)
-    {
-        // 200 for updated
-        $statusCode = $user->isNew() ? Response::HTTP_CREATED : Response::HTTP_OK;
-
-        $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            if ($user->getPlainPassword()) {
-                $password = $this->get('security.password_encoder')->encodePassword(
-                    $user,
-                    $user->getPlainPassword()
-                );
-                $user->setPassword($password);
-            }
-
-            $em = $this->getDoctrine()
-                       ->getManager()
-            ;
-
-            $em->persist($user);
-            $em->flush();
-
-            return new View('User ok.', $statusCode);
+        if (empty($name) && empty($email) && empty($password) && empty($phoneNumber) && empty($image)){
+            return new View("Bad Request", Response::HTTP_BAD_REQUEST);
         }
+
+        $user->setAge(18)
+            ->setDescription('non')
+            ->setGender('M')
+            ->setFile($image)
+            ->setName($name)
+            ->setEmail($email)
+            ->setPassword($password)
+            ->setPhoneNumber($phoneNumber);
+
+        $em = $this->getDoctrine()
+                   ->getManager()
+        ;
+        $em->persist($user);
+        $em->flush();
+
 
         $errors = [ 'errors' => $this->getErrorsFromForm($form) ];
 
@@ -118,4 +100,29 @@ class UserController extends FOSRestController
         }
         return $errors;
     }
+
+    /**
+     * @param Request $request
+     * @return View
+     * @Rest\Post("/user/login")
+     */
+    public function loginUser(Request $request)
+    {
+        $email = $request->get('email');
+        $password = $request->get('password');
+
+        $em = $this->getDoctrine()->getManager();
+
+        /**
+         * @var $luser User
+         */
+        $user = $em->getRepository('AppBundle:Luser')->findOneBy(array('email' => $email));
+
+        if ( $user->getPassword() === $password ){
+            return new View($user, Response::HTTP_ACCEPTED);
+        }else{
+            return new View($user, Response::HTTP_BAD_REQUEST);
+        }
+    }
+
 }

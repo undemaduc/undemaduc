@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 class LuserController extends Controller
 {
     /**
-     * @Rest\Post("/luser")
+     * @Rest\Post("/luser/create")
      * @param Request $request
      * @return View
      */
@@ -22,10 +22,12 @@ class LuserController extends Controller
         $name = $request->get('name');
         $email = $request->get('email');
         $password = $request->get('password');
+        $phoneNumber = $request->get('phone_number');
         $description = $request->get('description');
         $bed = $request->get('bed');
         $room = $request->get('rooms');
-        $disable = $request->get('disable');
+        $town = $request->get('town');
+        $disable = 0;
 
         if (empty($name) || empty($email) || empty($password) || empty($description) || empty($bed) || empty($room)) {
             return new View("NULL VALUES ARE NOT ALLOWED", Response::HTTP_NOT_ACCEPTABLE);
@@ -35,6 +37,8 @@ class LuserController extends Controller
             ->setDisable($disable)
             ->setRooms($room)
             ->setBeds($bed)
+            ->setPhoneNumber($phoneNumber)
+            ->setTown($town)
             ->setDescription($description)
             ->setEmail($email)
             ->setPassword($password);
@@ -46,5 +50,29 @@ class LuserController extends Controller
         $em->flush();
 
         return new View("User Added Successfully", Response::HTTP_OK);
+    }
+
+    /**
+     * @param Request $request
+     * @return View
+     * @Rest\Post("/luser/login")
+     */
+    public function loginLuser(Request $request)
+    {
+        $email = $request->get('email');
+        $password = $request->get('password');
+
+        $em = $this->getDoctrine()->getManager();
+
+        /**
+         * @var $luser Luser
+         */
+        $luser = $em->getRepository('AppBundle:Luser')->findOneBy(array('email' => $email));
+
+        if ( $luser->getPassword() === $password ){
+            return new View($luser, Response::HTTP_ACCEPTED);
+        }else{
+            return new View($luser, Response::HTTP_BAD_REQUEST);
+        }
     }
 }
