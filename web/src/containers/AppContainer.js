@@ -1,14 +1,17 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import Navigation from './elements/Navigation';
+import ConnectedNavigation from '../connected/ConnectedNavigation';
 
 class AppComponent extends Component {
+	constructor(props) {
+		super(props);		
+	}
+
 	render() {
 		return (
 			<div className="umd-box">
-
-				<Navigation />
+				<ConnectedNavigation />
 
 				{this.props.children}
 			</div>
