@@ -9,21 +9,20 @@ class UserLoginComponent extends Component {
     }
 
     render() {
+        console.log("LUSER LOGIN PROPS => ", this.props);
         return (
             <div>
-
                 <LoginButtonComponent buttonLabel="Login with Facebook"
                     className="btn btn-primary btn-lg btn-block umd-btn umd-btn--facebook content-action__button--force-bottom umd-btn--icon-right"
-                    onButtonClick={this.props.onFacebookButtonClick}
+                    onButtonClick={this.props.loginUser}
                     iconClassName="demo-icon icon-arrow-right icon" />
             </div>
         );
     }
-
 }
 
 UserLoginComponent.propTypes = {
-    onFacebookButtonClick: PropTypes.func.isRequired
+    loginUser: PropTypes.func.isRequired
 };
 
 export default UserLoginComponent;

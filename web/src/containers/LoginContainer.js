@@ -50,6 +50,13 @@ class LoginContainer extends Component {
         const { loginType } = this.state;
         const dropdownLabel = loginType === 'user' ? 'looking for' : loginType === 'luser' ? 'offering' : '';
 
+        const childrenWithProps = React.Children.map(this.props.children,
+            (child) => React.cloneElement(child, {
+                loginUser: this.props.loginUser,
+                loginLuser: this.props.loginLuser
+            })
+        );
+
         return (
             <div className="umd-content-container umd-setup-container umd-login-page d-flex flex-column">
                 <div className="setup-info-container">
@@ -77,7 +84,7 @@ class LoginContainer extends Component {
                     <h1>a place.</h1>
                 </div>
 
-                {this.props.children}
+                {childrenWithProps}
             </div>
         );
     }

@@ -11,7 +11,7 @@ export const LOGIN_FAILED = 'LOGIN_FAILED';
 
 export function loginUser(email, password) {
     return dispatch => {
-        return _login(email, password, 'undemaduc.lo/user/login', {
+        return _login(email, password, '/user/login', {
             succeeded: USER_LOGIN_SUCCEEDED
         }, dispatch);
     };
@@ -19,7 +19,7 @@ export function loginUser(email, password) {
 
 export function loginLuser(email, password) {
     return dispatch => {
-        return _login(email, password, 'undemaduc.lo/luser/login', {
+        return _login(email, password, '/luser/login', {
             succeeded: LUSER_LOGIN_SUCCEEDED
         }, dispatch);
     };
@@ -31,11 +31,14 @@ function _login(email, password, url, types, dispatch) {
     return axios({
         method: 'post',
         url: url,
+        baseURL: 'http://undemaduc.lo',
         data: { email, password }
     }).then(response => {
         dispatch({ type: types.succeeded, data: response.data });
     }).catch(error => {
         const errMessage = error.message;
+        console.log("LOGIN ERROR => ", error);
+        
         dispatch({ type: LOGIN_FAILED, reason: errMessage });
     });
 }

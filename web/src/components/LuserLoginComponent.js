@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {Link} from 'react-router';
+import { Link } from 'react-router';
 
 import LoginButtonComponent from './LoginButtonComponent';
 
@@ -10,13 +10,14 @@ class LuserLoginComponent extends Component {
     }
 
     render() {
+        console.log("LUSER LOGIN PROPS => ", this.props);
         return (
             <div className="umd-location-login">
 
                 <div className="location-login__form-container">
 
                     <div className="form-group">
-                        <input type="email" className="form-control umd-form-control" placeholder="Email" autofocus/>
+                        <input type="email" className="form-control umd-form-control" placeholder="Email" autoFocus />
                     </div>
 
                     <div className="form-group">
@@ -24,9 +25,9 @@ class LuserLoginComponent extends Component {
                     </div>
 
                     <LoginButtonComponent buttonLabel="Login"
-                                          className="btn btn-primary btn-lg btn-block umd-btn umd-btn--icon-right"
-                                          onButtonClick={this.props.onLoginButtonClick}
-                                          iconClassName="demo-icon icon-arrow-right icon" />
+                        className="btn btn-primary btn-lg btn-block umd-btn umd-btn--icon-right"
+                        onButtonClick={this.props.loginLuser}
+                        iconClassName="demo-icon icon-arrow-right icon" />
 
                     <Link to="/register" className="register">Register</Link>
 
@@ -38,7 +39,7 @@ class LuserLoginComponent extends Component {
 }
 
 LuserLoginComponent.propTypes = {
-    onLoginButtonClick: PropTypes.func.isRequired
+    loginLuser: PropTypes.func.isRequired
 };
 
 export default LuserLoginComponent;
