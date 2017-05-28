@@ -13,7 +13,7 @@ class Navigation extends React.Component {
                         <Link to="/events" className="nav-link"><i className="demo-icon icon-music"></i></Link>
                     </li>
                     <li className="nav-item">
-                        <Link to="/events" className="nav-link"><i className="demo-icon icon-user"></i></Link>
+                        <Link to="/my-profile" className="nav-link"><i className="demo-icon icon-user"></i></Link>
                     </li>
                     <li className="nav-item nav-item--last ml-auto">
                         <a className="nav-link" href="#">

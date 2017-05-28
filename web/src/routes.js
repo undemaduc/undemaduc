@@ -8,6 +8,7 @@ import ConnectedRegister from './connected/ConnectedRegister';
 import UserLoginComponent from './components/UserLoginComponent';
 import LuserLoginComponent from './components/LuserLoginComponent';
 import EventsComponent from './components/EventsComponent';
+import EditProfileComponent from './components/EditProfileComponent';
 
 export default (
 	<Route path="/" component={AppComponent}>
@@ -19,5 +20,6 @@ export default (
 			<Route path="luser" component={LuserLoginComponent} />
 		</Route>
 		<Route path="events" component={EventsComponent} />
+		<Route path="my-profile" component={EditProfileComponent} />
 	</Route>
 );
