@@ -1,0 +1,64 @@
+.umd-events {
+
+  .umd-events__navigation {
+    width: 100%;
+    max-width: 75px;
+
+    .navigation__icon {
+      color: white;
+      font-size: 16px;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+
+  .events-container {
+
+    position: relative;
+    margin-top: 30px;
+    margin-right: -45px;
+
+    .event {
+
+      position: relative;
+      margin-right: 25px;
+      height: auto;
+      max-width: 710px;
+
+      .event__image {
+        @include border-radius(5px);
+      }
+
+      .event__title {
+        position: absolute;
+        bottom: 140px;
+        left: 50%;
+        @include translateX(-50%);
+        font-weight: 500;
+        font-size: 32px;
+      }
+
+      .event__date {
+        position: absolute;
+        bottom: 100px;
+        left: 50%;
+        @include translateX(-50%);
+        color: white;
+        font-weight: 300;
+      }
+
+      &.hide {
+        display: none;
+      }
+
+      &:hover {
+        cursor: pointer;
+      }
+
+    }
+
+  }
+
+}
