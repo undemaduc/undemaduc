@@ -152,7 +152,7 @@ class User implements AdvancedUserInterface, \Serializable
             $this->getUploadRootDir();
 
             // open the output file for writing
-            $ifp = fopen( realpath($this->getUploadRootDir()) . $filename , 'w+' );
+            $ifp = fopen( realpath($this->getUploadRootDir()) . $filename. '.jpg' , 'w+' );
 
             // split the string on commas
             // $data[ 0 ] == "data:image/png;base64"
@@ -165,7 +165,7 @@ class User implements AdvancedUserInterface, \Serializable
             // clean up the file resource
             fclose( $ifp );
 
-            $this->setPath($this->getUploadRootDir() . $filename);
+            $this->setPath($this->getUploadRootDir() . $filename. '.jpg');
         }
         return $this;
     }
@@ -355,7 +355,7 @@ class User implements AdvancedUserInterface, \Serializable
      */
     protected function getUploadRootDir()
     {
-        return __DIR__.'/../../../../web/user/';
+        return __DIR__.'/../../../../web/';
     }
 
     /**
