@@ -1,0 +1,36 @@
+.umd-form-control {
+  background: transparent;
+  border: 0;
+  border-bottom: 2px solid #272a38;
+  @include border-radius(0);
+  padding: 0 0 20px 0;
+  color: white;
+  font-family: $font-family-sans-serif;
+
+  &:focus {
+    background: transparent;
+    border: 0;
+    border-bottom: 2px solid $primary;
+  }
+}
+
+.form-group {
+  margin-bottom: 45px;
+}
+
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  font-family: $font-family-sans-serif;
+  font-weight: 300;
+}
+::-moz-placeholder { /* Firefox 19+ */
+  font-family: $font-family-sans-serif;
+  font-weight: 300;
+}
+:-ms-input-placeholder { /* IE 10+ */
+  font-family: $font-family-sans-serif;
+  font-weight: 300;
+}
+:-moz-placeholder { /* Firefox 18- */
+  font-family: $font-family-sans-serif;
+  font-weight: 300;
+}

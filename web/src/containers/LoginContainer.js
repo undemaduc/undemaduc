@@ -52,28 +52,30 @@ class LoginContainer extends Component {
 
         return (
             <div className="umd-content-container umd-setup-container umd-login-page d-flex flex-column">
-                <h1 className="setup__title">I'm</h1>
+                <div className="setup-info-container">
+                    <h1 className="setup__title-spacing">I'm</h1>
 
-                <div className="umd-dropdown">
-                    <Dropdown ref="dropdown">
-                        <DropdownTrigger>
-                            <h1>{dropdownLabel}</h1>
-                            <i className="demo-icon icon-trig-down toggle-icon"></i>
-                        </DropdownTrigger>
-                        <DropdownContent>
-                            <ul>
-                                <li className="first">
-                                    <h1 onClick={() => this.browseToLoginType("/login/user")}>looking for</h1>
-                                </li>
-                                <li className="last">
-                                    <h1 onClick={() => this.browseToLoginType("/login/luser")}>offering</h1>
-                                </li>
-                            </ul>
-                        </DropdownContent>
-                    </Dropdown>
+                    <div className="umd-dropdown setup__title-spacing">
+                        <Dropdown ref="dropdown">
+                            <DropdownTrigger>
+                                <h1>{dropdownLabel}</h1>
+                                <i className="demo-icon icon-trig-down toggle-icon"></i>
+                            </DropdownTrigger>
+                            <DropdownContent>
+                                <ul>
+                                    <li className="first">
+                                        <h1 onClick={() => this.browseToLoginType("/login/user")}>looking for</h1>
+                                    </li>
+                                    <li className="last">
+                                        <h1 onClick={() => this.browseToLoginType("/login/luser")}>offering</h1>
+                                    </li>
+                                </ul>
+                            </DropdownContent>
+                        </Dropdown>
+                    </div>
+
+                    <h1>a place.</h1>
                 </div>
-
-                <h1 className="setup__title">a place.</h1>
 
                 {this.props.children}
             </div>

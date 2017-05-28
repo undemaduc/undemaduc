@@ -17,12 +17,16 @@
 @import "fontello/animations";
 
 // reusable componenets
+@import "components/inputs";
 @import "components/buttons";
 @import "components/dropdown";
 @import "components/navbar";
 
 // specific screen styles
 @import "screens/general";
+@import "screens/setup";
 @import "screens/box";
 @import "screens/login";
+@import "screens/register";
 @import "screens/events";
+@import "screens/location-user-login";

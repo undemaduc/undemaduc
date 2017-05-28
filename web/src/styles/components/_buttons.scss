@@ -23,6 +23,11 @@
     background-color: $facebook;
     border-color: $facebook;
 
+    &:hover {
+      background-color: darken($facebook, 10%);
+      border-color: darken($facebook, 10%);
+    }
+
   }
 
   &:focus {
