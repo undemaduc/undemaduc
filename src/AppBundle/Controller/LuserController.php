@@ -24,7 +24,7 @@ class LuserController extends Controller
         $password = $request->get('password');
         $phoneNumber = $request->get('phone_number');
         $description = $request->get('description');
-        $bed = $request->get('bed');
+        $bed = $request->get('beds');
         $room = $request->get('rooms');
         $town = $request->get('town');
         $disable = 0;

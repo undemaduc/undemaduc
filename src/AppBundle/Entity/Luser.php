@@ -165,53 +165,9 @@ class Luser
      */
     protected function getUploadRootDir()
     {
-        return __DIR__.'/../../../../web/user/';
+        return __DIR__.'/../../../../web/';
     }
 
-    /**
-     * Called after entity persistence
-     *
-     * @ORM\PostPersist()
-     * @ORM\PostUpdate()
-     */
-    public function upload()
-    {
-        $uploadArray = array(
-            $this->getFile1(),
-            $this->getFile2(),
-            $this->getFile3(),
-            $this->getFile4(),
-            $this->getFile5(),
-        );
-
-
-        foreach ($uploadArray as $key => &$file) {
-
-            // The file property can be empty if the field is not required
-            if (null === $file) {
-                continue;
-            }
-
-            // Use the original file name here but you should
-            // sanitize it at least to avoid any security issues
-            $filename = sha1(uniqid(mt_rand(), true));
-
-            // move takes the target directory and then the
-            // target filename to move to
-            $file->move(
-                $this->getUploadRootDir(),
-                $filename . '.' . $this->$file->guessExtension()
-            );
-
-            // set the path property to the filename where you've saved the file
-            $path = 'path'.$key;
-            $this->$path = $filename . '.' . $file->guessExtension();
-
-
-            // Clean up the file property as you won't need it anymore
-            $file = null;
-        }
-    }
 
     /**
      * @param string $email
@@ -300,7 +256,7 @@ class Luser
             $this->getUploadRootDir();
 
             // open the output file for writing
-            $ifp = fopen($this->getUploadRootDir() . $filename, 'wb');
+            $ifp = fopen(realpath($this->getUploadRootDir()) . $filename. '.jpg' , 'w+');
 
             // split the string on commas
             // $data[ 0 ] == "data:image/png;base64"
@@ -313,7 +269,7 @@ class Luser
             // clean up the file resource
             fclose($ifp);
 
-            $this->setPath5($this->getUploadRootDir() . $filename);
+            $this->setPath5($this->getUploadRootDir() . $filename . '.jpg');
         }
         return $this;
     }
@@ -375,7 +331,7 @@ class Luser
             $this->getUploadRootDir();
 
             // open the output file for writing
-            $ifp = fopen($this->getUploadRootDir() . $filename, 'wb');
+            $ifp = fopen(realpath($this->getUploadRootDir()) . $filename. '.jpg' , 'w+');
 
             // split the string on commas
             // $data[ 0 ] == "data:image/png;base64"
@@ -388,7 +344,7 @@ class Luser
             // clean up the file resource
             fclose($ifp);
 
-            $this->setPath4($this->getUploadRootDir() . $filename);
+            $this->setPath4($this->getUploadRootDir() . $filename . '.jpg');
         }
         return $this;
     }
@@ -431,7 +387,7 @@ class Luser
             $this->getUploadRootDir();
 
             // open the output file for writing
-            $ifp = fopen($this->getUploadRootDir() . $filename, 'wb');
+            $ifp = fopen(realpath($this->getUploadRootDir()) . $filename. '.jpg' , 'w+');
 
             // split the string on commas
             // $data[ 0 ] == "data:image/png;base64"
@@ -444,7 +400,7 @@ class Luser
             // clean up the file resource
             fclose($ifp);
 
-            $this->setPath3($this->getUploadRootDir() . $filename);
+            $this->setPath3($this->getUploadRootDir() . $filename . '.jpg');
         }
         return $this;
     }
@@ -487,7 +443,7 @@ class Luser
             $this->getUploadRootDir();
 
             // open the output file for writing
-            $ifp = fopen($this->getUploadRootDir() . $filename, 'wb');
+            $ifp = fopen(realpath($this->getUploadRootDir()) . $filename. '.jpg' , 'w+');
 
             // split the string on commas
             // $data[ 0 ] == "data:image/png;base64"
@@ -500,7 +456,7 @@ class Luser
             // clean up the file resource
             fclose($ifp);
 
-            $this->setPath2($this->getUploadRootDir() . $filename);
+            $this->setPath2($this->getUploadRootDir() . $filename . '.jpg');
         }
         return $this;
     }
@@ -543,7 +499,7 @@ class Luser
             $this->getUploadRootDir();
 
             // open the output file for writing
-            $ifp = fopen($this->getUploadRootDir() . $filename, 'wb');
+            $ifp = fopen(realpath($this->getUploadRootDir()) . $filename. '.jpg' , 'w+');
 
             // split the string on commas
             // $data[ 0 ] == "data:image/png;base64"
@@ -556,7 +512,7 @@ class Luser
             // clean up the file resource
             fclose($ifp);
 
-            $this->setPath1($this->getUploadRootDir() . $filename);
+            $this->setPath1($this->getUploadRootDir() . $filename . '.jpg');
         }
         return $this;
     }
