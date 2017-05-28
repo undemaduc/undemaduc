@@ -295,25 +295,26 @@ class Luser
      */
     public function setFile5($file5)
     {
-        $filename = sha1(uniqid(mt_rand(), true));
-        $this->getUploadRootDir();
+        if ( $file5 ) {
+            $filename = sha1(uniqid(mt_rand(), true));
+            $this->getUploadRootDir();
 
-        // open the output file for writing
-        $ifp = fopen( $this->getUploadRootDir() . $filename, 'wb' );
+            // open the output file for writing
+            $ifp = fopen($this->getUploadRootDir() . $filename, 'wb');
 
-        // split the string on commas
-        // $data[ 0 ] == "data:image/png;base64"
-        // $data[ 1 ] == <actual base64 string>
-        $data = explode( ',', $file5 );
+            // split the string on commas
+            // $data[ 0 ] == "data:image/png;base64"
+            // $data[ 1 ] == <actual base64 string>
+            $data = explode(',', $file5);
 
-        // we could add validation here with ensuring count( $data ) > 1
-        fwrite( $ifp, base64_decode( $data[ 1 ] ) );
+            // we could add validation here with ensuring count( $data ) > 1
+            fwrite($ifp, base64_decode($data[1]));
 
-        // clean up the file resource
-        fclose( $ifp );
+            // clean up the file resource
+            fclose($ifp);
 
-        $this->setPath5($this->getUploadRootDir() . $filename);
-
+            $this->setPath5($this->getUploadRootDir() . $filename);
+        }
         return $this;
     }
 
@@ -369,25 +370,26 @@ class Luser
      */
     public function setFile4($file4)
     {
-        $filename = sha1(uniqid(mt_rand(), true));
-        $this->getUploadRootDir();
+        if ( $file4 ) {
+            $filename = sha1(uniqid(mt_rand(), true));
+            $this->getUploadRootDir();
 
-        // open the output file for writing
-        $ifp = fopen( $this->getUploadRootDir() . $filename, 'wb' );
+            // open the output file for writing
+            $ifp = fopen($this->getUploadRootDir() . $filename, 'wb');
 
-        // split the string on commas
-        // $data[ 0 ] == "data:image/png;base64"
-        // $data[ 1 ] == <actual base64 string>
-        $data = explode( ',', $file4 );
+            // split the string on commas
+            // $data[ 0 ] == "data:image/png;base64"
+            // $data[ 1 ] == <actual base64 string>
+            $data = explode(',', $file4);
 
-        // we could add validation here with ensuring count( $data ) > 1
-        fwrite( $ifp, base64_decode( $data[ 1 ] ) );
+            // we could add validation here with ensuring count( $data ) > 1
+            fwrite($ifp, base64_decode($data[1]));
 
-        // clean up the file resource
-        fclose( $ifp );
+            // clean up the file resource
+            fclose($ifp);
 
-        $this->setPath4($this->getUploadRootDir() . $filename);
-
+            $this->setPath4($this->getUploadRootDir() . $filename);
+        }
         return $this;
     }
 
@@ -424,25 +426,26 @@ class Luser
      */
     public function setFile3($file3)
     {
-        $filename = sha1(uniqid(mt_rand(), true));
-        $this->getUploadRootDir();
+        if ( $file3 ) {
+            $filename = sha1(uniqid(mt_rand(), true));
+            $this->getUploadRootDir();
 
-        // open the output file for writing
-        $ifp = fopen( $this->getUploadRootDir() . $filename, 'wb' );
+            // open the output file for writing
+            $ifp = fopen($this->getUploadRootDir() . $filename, 'wb');
 
-        // split the string on commas
-        // $data[ 0 ] == "data:image/png;base64"
-        // $data[ 1 ] == <actual base64 string>
-        $data = explode( ',', $file3 );
+            // split the string on commas
+            // $data[ 0 ] == "data:image/png;base64"
+            // $data[ 1 ] == <actual base64 string>
+            $data = explode(',', $file3);
 
-        // we could add validation here with ensuring count( $data ) > 1
-        fwrite( $ifp, base64_decode( $data[ 1 ] ) );
+            // we could add validation here with ensuring count( $data ) > 1
+            fwrite($ifp, base64_decode($data[1]));
 
-        // clean up the file resource
-        fclose( $ifp );
+            // clean up the file resource
+            fclose($ifp);
 
-        $this->setPath3($this->getUploadRootDir() . $filename);
-
+            $this->setPath3($this->getUploadRootDir() . $filename);
+        }
         return $this;
     }
 
@@ -479,25 +482,26 @@ class Luser
      */
     public function setFile2($file2)
     {
-        $filename = sha1(uniqid(mt_rand(), true));
-        $this->getUploadRootDir();
+        if ( $file2 ) {
+            $filename = sha1(uniqid(mt_rand(), true));
+            $this->getUploadRootDir();
 
-        // open the output file for writing
-        $ifp = fopen( $this->getUploadRootDir() . $filename, 'wb' );
+            // open the output file for writing
+            $ifp = fopen($this->getUploadRootDir() . $filename, 'wb');
 
-        // split the string on commas
-        // $data[ 0 ] == "data:image/png;base64"
-        // $data[ 1 ] == <actual base64 string>
-        $data = explode( ',', $file2 );
+            // split the string on commas
+            // $data[ 0 ] == "data:image/png;base64"
+            // $data[ 1 ] == <actual base64 string>
+            $data = explode(',', $file2);
 
-        // we could add validation here with ensuring count( $data ) > 1
-        fwrite( $ifp, base64_decode( $data[ 1 ] ) );
+            // we could add validation here with ensuring count( $data ) > 1
+            fwrite($ifp, base64_decode($data[1]));
 
-        // clean up the file resource
-        fclose( $ifp );
+            // clean up the file resource
+            fclose($ifp);
 
-        $this->setPath2($this->getUploadRootDir() . $filename);
-
+            $this->setPath2($this->getUploadRootDir() . $filename);
+        }
         return $this;
     }
 
@@ -534,25 +538,26 @@ class Luser
      */
     public function setFile1($file1)
     {
-        $filename = sha1(uniqid(mt_rand(), true));
-        $this->getUploadRootDir();
+        if ( $file1 ) {
+            $filename = sha1(uniqid(mt_rand(), true));
+            $this->getUploadRootDir();
 
-        // open the output file for writing
-        $ifp = fopen( $this->getUploadRootDir() . $filename, 'wb' );
+            // open the output file for writing
+            $ifp = fopen($this->getUploadRootDir() . $filename, 'wb');
 
-        // split the string on commas
-        // $data[ 0 ] == "data:image/png;base64"
-        // $data[ 1 ] == <actual base64 string>
-        $data = explode( ',', $file1 );
+            // split the string on commas
+            // $data[ 0 ] == "data:image/png;base64"
+            // $data[ 1 ] == <actual base64 string>
+            $data = explode(',', $file1);
 
-        // we could add validation here with ensuring count( $data ) > 1
-        fwrite( $ifp, base64_decode( $data[ 1 ] ) );
+            // we could add validation here with ensuring count( $data ) > 1
+            fwrite($ifp, base64_decode($data[1]));
 
-        // clean up the file resource
-        fclose( $ifp );
+            // clean up the file resource
+            fclose($ifp);
 
-        $this->setPath1($this->getUploadRootDir() . $filename);
-
+            $this->setPath1($this->getUploadRootDir() . $filename);
+        }
         return $this;
     }
 
