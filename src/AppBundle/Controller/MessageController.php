@@ -27,9 +27,9 @@ class MessageController extends Controller
         $toLuser = $request->get('toLuser');
         $text = $request->get('message');
 
-        if ( empty($text) ){
-            return new View("NULL VALUES ARE NOT ALLOWED", Response::HTTP_NOT_ACCEPTABLE);
-        }
+        // if ( empty($text) ){
+        //     return new View("NULL VALUES ARE NOT ALLOWED", Response::HTTP_NOT_ACCEPTABLE);
+        // }
 
         $manager = $this->getDoctrine()->getManager();
 

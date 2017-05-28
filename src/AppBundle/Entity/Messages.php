@@ -32,7 +32,7 @@ class Messages
      * @var int
      * @ORM\ManyToOne(targetEntity="User", inversedBy="messagesTo")
      * @ORM\JoinColumn(name="to_user", referencedColumnName="id", nullable=true)
-     * @JMS\
+     * 
      */
     protected $toUser;
 
