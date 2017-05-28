@@ -80,7 +80,7 @@ class LuserController extends Controller
          */
         $luser = $em->getRepository('AppBundle:Luser')->findOneBy(array('email' => $email));
 
-        if ( $luser->getPassword() === $password ){
+        if ( $luser && $luser->getPassword() === $password ){
             return new View($luser, Response::HTTP_ACCEPTED);
         }else{
             return new View($luser, Response::HTTP_BAD_REQUEST);
