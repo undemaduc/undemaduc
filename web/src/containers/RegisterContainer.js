@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import autoBind from 'react-autobind';
 import PropTypes from 'prop-types';
@@ -20,6 +19,7 @@ class RegisterContainer extends Component {
     }
 
     registerUser() {
+        console.log('ok?');
         const { name, photo, email, phoneNumber } = this.state;
 
         if (name && photo && email && phoneNumber) {
@@ -46,19 +46,39 @@ class RegisterContainer extends Component {
 
     render() {
         return (
-            <div className="umd-content-container umd-setup-container umd-login-page d-flex flex-column">
-                <h1>Welcome!</h1>
-                <h5 className="setup__title">Let's set up your profile...</h5>
+            <div className="umd-content-container umd-setup-container umd-login-page d-flex flex-column umd-register">
 
-                <input type="text" placeholder="Name" onChange={this.onNameChange} />
-                <input type="text" placeholder="Photo" />
-                <input type="email" placeholder="Email address" onChange={this.onEmailChange} />
-                <input type="number" placeholder="Phone number" onChange={this.onPhoneNrChange} />
+                <div className="setup-info-container">
 
-                <LoginButtonComponent iconClassName="demo-icon icon-arrow-right icon"
-                    className="btn btn-primary btn-lg btn-block umd-btn content-action__button--force-bottom umd-btn--icon-right"
-                    buttonLabel="Save and continue"
-                    onButtonClick={() => this.props.registerUser()} />
+                    <h1>Welcome!</h1>
+                    <h4>Let's set up your profile...</h4>
+
+                </div>
+
+                <div className="umd-register__form-container">
+
+                    <div className="form-group">
+                        <input type="text" className="form-control umd-form-control" placeholder="Name" onChange={this.onNameChange}/>
+                    </div>
+
+                    <div className="form-group">
+                        <input type="text" className="form-control umd-form-control" placeholder="Photo"/>
+                    </div>
+
+                    <div className="form-group">
+                        <input type="email" className="form-control umd-form-control" placeholder="Email" onChange={this.onEmailChange}/>
+                    </div>
+
+                    <div className="form-group">
+                        <input type="phone" className="form-control umd-form-control" placeholder="Phone number" onChange={this.onPhoneNrChange}/>
+                    </div>
+
+                    <LoginButtonComponent iconClassName="demo-icon icon-arrow-right icon"
+                                          className="btn btn-primary btn-lg btn-block umd-btn content-action__button--force-bottom umd-btn--icon-right"
+                                          buttonLabel="Save and go to Events"
+                                          onButtonClick={() => this.props.registerUser()} />
+
+                </div>
 
             </div>
         );

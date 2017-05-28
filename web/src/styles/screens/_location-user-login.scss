@@ -1,0 +1,18 @@
+.umd-location-login {
+
+  .location-login__form-container {
+    margin-top: 100px;
+
+    .register {
+      display: block;
+      font-size: 16px;
+      color: #8d8f96;
+      margin-top: 50px;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+}
