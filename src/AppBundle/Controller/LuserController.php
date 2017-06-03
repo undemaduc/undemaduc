@@ -88,7 +88,7 @@ class LuserController extends Controller
     }
 
     /**
-     * @Rest\Post("/luser/{town}")
+     * @Rest\Get("/luser/{town}")
      */
     public function getViaTown($town)
     {

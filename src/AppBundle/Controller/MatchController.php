@@ -90,7 +90,7 @@ class MatchController extends Controller
     }
 
     /**
-     * @Rest\Post("/match/user/")
+     * @Rest\Post("/match/luser")
      */
     public function createMatchLuser(Request $request)
     {
@@ -103,8 +103,12 @@ class MatchController extends Controller
             return new View("NULL VALUES NOT ALLOWED", Response::HTTP_BAD_REQUEST);
         }
 
-        $match->setUser($request->get('user_id'));
-        $match->setLuser($request->get('luser_id'));
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository('AppBundle:User')->find($request->get('user_id'));
+        $luser = $em->getRepository('AppBundle:Luser')->find($request->get('luser_id'));
+
+        $match->setUser($user);
+        $match->setLuser($luser);
 
         $match->setLToU(true);
 
