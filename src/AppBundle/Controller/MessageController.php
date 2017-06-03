@@ -57,7 +57,7 @@ class MessageController extends Controller
         $combined = array_merge($viaUser,$viaLuser);
 
         usort($combined,function (Messages $a , Messages $b){
-            return $a->getCreatedAt() < $b->getCreatedAt() ? true : false;
+            return $a->getCreatedAt() > $b->getCreatedAt() ? true : false;
         });
 
         return new View($combined,Response::HTTP_ACCEPTED);
